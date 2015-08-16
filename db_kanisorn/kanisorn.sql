@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 16, 2015 at 07:27 AM
+-- Generation Time: Aug 17, 2015 at 12:12 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.5.19
 
@@ -30,15 +30,29 @@ CREATE TABLE IF NOT EXISTS `file_document` (
 `file_docId` int(11) NOT NULL,
   `file_subName` text NOT NULL,
   `file_docPath` text NOT NULL,
-  `file_docDetail` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `file_docDetail` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `file_document`
 --
 
 INSERT INTO `file_document` (`file_docId`, `file_subName`, `file_docPath`, `file_docDetail`) VALUES
-(1, 'test', '11822712_763324007109636_2546169954563615768_n.jpg', 0);
+(0, 'test update', '11351418_1598291317115197_5276429056286462902_n.jpg', 'ทดสอบการอัพเดท');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `research`
+--
+
+CREATE TABLE IF NOT EXISTS `research` (
+`res_id` int(11) NOT NULL,
+  `res_name` text NOT NULL,
+  `res_file` text NOT NULL,
+  `res_pict` text NOT NULL,
+  `res_detail` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -71,6 +85,12 @@ ALTER TABLE `file_document`
  ADD PRIMARY KEY (`file_docId`);
 
 --
+-- Indexes for table `research`
+--
+ALTER TABLE `research`
+ ADD PRIMARY KEY (`res_id`);
+
+--
 -- Indexes for table `university`
 --
 ALTER TABLE `university`
@@ -84,7 +104,12 @@ ALTER TABLE `university`
 -- AUTO_INCREMENT for table `file_document`
 --
 ALTER TABLE `file_document`
-MODIFY `file_docId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `file_docId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `research`
+--
+ALTER TABLE `research`
+MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `university`
 --

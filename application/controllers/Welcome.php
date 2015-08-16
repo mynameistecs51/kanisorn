@@ -7,14 +7,14 @@ class Welcome extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Model_main','',TRUE);	}
 
-	public function index(){
-		$data = array(
+		public function index(){
+			$data = array(
 			'active' => "history",	//select menu active
 			'get_university' => $this->Model_main->get_University(),
 			);
 
-		$this->load->view('index',$data);
-	}
+			$this->load->view('index',$data);
+		}
 
 	public function management(){  //management page
 		$data = array(
@@ -75,11 +75,6 @@ class Welcome extends CI_Controller {
 
 
 		if( $this->form_validation->run() === FALSE ){
-			// $data = array(
-			// 	'active' => "document",
-			// 	'show_doc' => $this->Model_main->get_doc(),
-			// 	);
-			//$this->load->view('admin/manage_document',$data);
 			$this->mngDocument();	//load function mngDocument()
 			return false;
 		}else{
@@ -94,6 +89,19 @@ class Welcome extends CI_Controller {
 			return false;
 		}else{
 			$this->Model_main->delete_fileDoc($doc_id);
+			redirect('Welcome/mngDocument','refresh');
+		}
+	}
+	public function update_document(){
+		$file_docId = $this->input->post('file_docId');
+
+		if(!empty($_FILES['file_doc']['name'])){
+			$this->Model_main->update_file($file_docId);
+			$this->mngDocument();
+		}elseif($file_docId != null ){
+			$this->Model_main->update_fileDoc($file_docId);
+			$this->mngDocument();
+		}else{
 			redirect('Welcome/mngDocument','refresh');
 		}
 	}

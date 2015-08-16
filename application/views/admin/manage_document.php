@@ -9,7 +9,7 @@
 <div class="well"> <!-- show cantact-->
 
 	<div class="text-left">
-		<a class="btn btn-success"> จัดการเอกสารประกอบการสอน ///เหลือ ลบกับแก้ไข</a>
+		<a class="btn btn-success"> จัดการเอกสารประกอบการสอน</a>
 	</div>
 
 	<hr>
@@ -90,45 +90,57 @@
 											<?php echo anchor('#','แก้ไข','data-toggle="modal" data-target="#myModal'.$row_doc->file_docId.'"');?>
 										</td>
 									</tr>
-									<!-- Modal -->
+									<!-- Modal  form upload -->
 									<div class="modal fade" id="myModal<?php echo $row_doc->file_docId;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-										<div class="modal-dialog" role="document">
+										<div class="modal-dialog modal-md" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-													<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+													<h4 class="modal-title" id="myModalLabel">อัพเดท เอกสารการสอน</h4>
 												</div>
-												<div class="modal-body">
-													<?php
-													echo form_open('Welcome/update_uni','class="inline" role="form"');
-													echo '<input type="hidden" name="file_docId" value="'.$row_doc->file_docId.'"';
-													echo '<div class="form-group">';
-													echo '<label for="universityData">เพิ่มข้อมูการศึกษา</label>';
-													echo form_error('universityData', '<div class="form_error1">', '</div>');
-													echo '<textarea  class="form-control" id="universityData" name="universityData">',$row_doc->uni_data.'</textarea>';
-													?>
+												<div class="modal-body row">													<?php echo form_open_multipart('Welcome/update_document',' class="form-horizontal" role="form" ');?>
+													<input type="hidden" id="file_docId" name="file_docId"  value="<?php echo $row_doc->file_docId;?>" />
+													<div class="form-group col-sm-12">
+														<label for="input_docName" class="col-md-2 control-label text-right">ชื่อวิชา </label>
+														<div class="col-sm-4">
+															<input type="text" class="form-control" id="input_docName" name="input_docName" value="<?php echo $row_doc->file_subName; ?>">
+															<br/>
+														</div>
 
+														<label for="file_doc" class="col-sm-2 control-label text-right" >เพิ่มไฟล์</label>
+														<div class="col-sm-4 ">
+															<input type="file" id="file_doc" class="form-control" name="file_doc" value="" size="20" />
+														</div>
+													</div>
+													<div class="form-group col-sm-12">
+														<label for="input_docDetail" class="col-md-2 control-label text-right">รายละเอียดวิชา</label>
+														<div class="col-sm-10">
+															<textarea class="form-control" id="input_docDetail" name="input_docDetail" ><?php echo $row_doc->file_docDetail;?></textarea>
+															<label class="text-helper" style="color:red">**กรอกรายละเอียดพอสังเขป**</label>
+														</div>
+													</div>
+													<div class="form-group col-sm-12 ">
+														<div class="pull-right">
+															<button type="reset" class="btn btn-warning" >RESET</button>
+															<button type="submit" class="btn btn-success" name="submit" value="submit">SAVE</button>
+														</div>
+													</div>
+													<?php echo form_close();?>										<hr/>
 												</div>
-												<div class="modal-footer">
-													<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-													<button type="submit" class="btn btn-primary">Save changes</button>
-												</div>
-												<?php echo form_close();?>
 											</div>
-										</div>
-									</div><!-- end modal -->
-								<?php endforeach; ?>
-							</tbody>
-						</table>
+										</div><!-- end modal -->
+									<?php endforeach; ?>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<hr>
+		<hr>
 
-</div> <!-- /.end show contact -->
-<script type="text/javascript">
-</script>
-<?php $this->load->view('admin/footer');?>
+	</div> <!-- /.end show contact -->
+	<script type="text/javascript">
+	</script>
+	<?php $this->load->view('admin/footer');?>

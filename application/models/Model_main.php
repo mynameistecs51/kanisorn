@@ -69,8 +69,59 @@ class Model_main extends CI_model{
 				'show_doc' => $this->Model_main->get_doc(),
 				'file_error' => 'กรุณาเลือกไฟล์',
 				);
-			$this->load->view('admin/manage_document',$data);		}
+			$this->load->view('admin/manage_document',$data);
+		}
 
+		return true;
+	}
+
+	function update_file($file_docId){
+		 $file_name =  date('d_m_y_H_i_s');
+		$db_query = $this->db->query('SELECT * FROM file_document WHERE file_docId='.$file_docId)->result();
+		foreach ($db_query as $row_fileDoc) {
+			unlink('./files_upload/file_document/'.$row_fileDoc->file_docPath);		//ลบรูปเก่าออก
+		}
+
+		$config['upload_path'] =  './files_upload/file_document';
+		$config['allowed_types'] = 'doc|docx|pdf|jpg|jpeg|png|';
+		$config['max_size'] = '7000';		// 7mb
+		$config['file_name'] = $file_name.$_FILES['file_doc']['name'];		//fiel_name
+		$config['remove_spaces'] = TRUE;
+
+		$this->load->library("upload",$config);		//library upload
+		$this->upload->initialize($config);
+		if($this->upload->do_upload('file_doc')){	//ถ้า upload ไม่มีปัญหา
+			$data_update = array(
+				'file_subName' => $this->input->post('input_docName'),
+				'file_docPath' => $file_name.$_FILES['file_doc']['name'],
+				'file_docDetail' => $this->input->post('input_docDetail'),
+				);
+			$this->db->where('file_docId',$file_docId);
+			$this->db->update('file_document',$data_update);
+			return TRUE;
+		}
+		else{
+			// echo $this->upload->display_errors()."error_doc  ";
+			// return FALSE;
+			$data = array(
+				'active' => "document",
+				'show_doc' => $this->Model_main->get_doc(),
+				'file_error' => $this->upload->display_errors(),
+				);
+			$this->load->view('admin/manage_document',$data);
+		}
+
+		return true;
+	}
+
+	function update_fileDoc($file_docId){
+		$data_update = array(
+			'file_docId' =>'$file_docId',
+			'file_subName' => $this->input->post('input_docName'),
+			'file_docDetail' => $this->input->post('input_docDetail'),
+			);
+		$this->db->where('file_docId',$file_docId);
+		$this->db->update('file_document',$data_update);
 		return true;
 	}
 
