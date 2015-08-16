@@ -19,6 +19,7 @@ class Welcome extends CI_Controller {
 
 	public function management(){  //management page
 		$data = array(
+			'active' => "history",
 			'get_university' => $this->Model_main->get_University(),
 			);
 		$this->load->view('admin/manage_history',$data);
@@ -29,8 +30,13 @@ class Welcome extends CI_Controller {
 		$this->form_validation->set_rules('universityData','universityData','trim|required|xss_clean');
 		$this->form_validation->set_message('required', '::กรุณากรอกรายละเอียด ::');
 
+		$data = array(
+			'active' => "history",
+			'get_university' => $this->Model_main->get_University(),
+			);
+
 		if($this->form_validation->run() === FALSE){
-			$this->load->view('admin/manage_history');
+			$this->load->view('admin/manage_history',$data);
 			return FALSE;
 		}else{
 			$this->Model_main->insert_dataUniversity();
@@ -47,29 +53,64 @@ class Welcome extends CI_Controller {
 		$this->Model_main->delete_universityID($uni_id);
 		redirect('Welcome/management','refresh');
 	}
+
 	public function  document(){  //show document
 		$data =array(
 			'active' => "document",
 			);
 		$this->load->view('document',$data);
 	}
+
 	public function mngDocument(){	//management data document
 		$data = array(
 			'active' => "document",
+			'show_doc' => $this->Model_main->get_doc(),
 			);
 		$this->load->view('admin/manage_document',$data);
 	}
 
 	public function add_document(){
-		if($_FILES['file_doc']['name'] !== FALSE){
-			$this->Model_main->upload_fileDoc();	//upload document file --> function upload_fileDoc()
-			redirect('Welcome/mngDocument','refresh');
+		//$this->form_validation->set_rules('file_doc','file_doc','required');
+		$this->form_validation->set_rules('input_docName','input_docName','required');
+		$this->form_validation->set_message('required', '::กรุณากรอกรายละเอียด ::');
+
+
+		if( $this->form_validation->run() === FALSE ){
+			$data = array(
+				'active' => "document",
+				'show_doc' => $this->Model_main->get_doc(),
+				);
+			$this->load->view('admin/manage_document',$data);
+			return false;
 		}else{
-			echo "no file";
+			$this->Model_main->upload_fileDoc();		//upload document file --> function upload_fileDoc()
+		}
+		redirect('Welcome/mngDocument','refresh');
+	}
+
+	public function del_docID($doc_id=""){
+		if(!$doc_id){
+			redirect('Welcome/mngDocument','refresh');
+			return false;
+		}else{
+			$this->Model_main->delete_fileDoc($doc_id);
+			redirect('Welcome/mngDocument','refresh');
 		}
 	}
 
+	public function mngResearch(){	//management research
+		$data = array(
+			'active' => "research",
+			);
+		$this->load->view('admin/manage_research',$data);
+	}
 
+	public function table_taecher(){
+		$data = array(
+			'active' => 'table_taecher',
+			);
+		$this->load->view('admin/mngTable',$data);
+	}
 	public function contact(){	//show contact
 		$data = array(
 			'active' => 'contact',

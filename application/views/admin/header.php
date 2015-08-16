@@ -88,17 +88,16 @@
 
 				<div class="list-group"> <!-- เมนู -->
 
-					<?php 
-					$a ='';
-					// $a = ($active == 'history' ? 'active' : '');
+					<?php
+					$a = ($active == 'history' ? 'active' : '');
 					echo anchor('Welcome/management','<i class="fa fa-info-circle"> จัดการประวัติการศึกษา</i>','class="list-group-item '.$a.'"');
-					// $a = ($active == 'document' ? 'active' : '');
+					$a = ($active == 'document' ? 'active' : '');
 					echo anchor('Welcome/mngDocument','<i class="fa fa-book"> จัดการเอกสารประกอบการสอน</i>','class="list-group-item '.$a.'"');
-					// $a = ($active == 'research' ? 'active' : '');
-					echo anchor('#','<i class="fa fa-newspaper-o"> จัดการงานวิจัย</i>','class="list-group-item '.$a.'"');
-					// $a = ($active == 'table_taecher' ? 'active':'');
-					echo anchor('#','<i class="fa fa-newspaper-o"> จัดการตารางสอน</i>','class="list-group-item '.$a.'"');
-					// $a = ($active == 'contact' ? 'active': '');
+					$a = ($active == 'research' ? 'active' : '');
+					echo anchor('Welcome/mngResearch','<i class="fa fa-newspaper-o"> จัดการงานวิจัย</i>','class="list-group-item '.$a.'"');
+					$a = ($active == 'table_taecher' ? 'active':'');
+					echo anchor('Welcome/table_taecher','<i class="fa fa-newspaper-o"> จัดการตารางสอน</i>','class="list-group-item '.$a.'"');
+					$a = ($active == 'contact' ? 'active': '');
 					echo anchor('Welcome/contact','<i class="fa fa-commenting"> จัดการติดต่อ</i>','class="list-group-item '.$a.'"');
 					?>
 

@@ -32,6 +32,16 @@ class Model_main extends CI_model{
 		$this->db->delete('university');
 		return TRUE;
 	}
+	function insert_doc(){
+		$data_fileProject = $this->upload->data();
+		$data_insert = array(
+			'file_docId' =>'',
+			'file_subName' => $this->input->post('input_docName'),
+			'file_docPath' => $_FILES['file_doc']['name'],
+			'file_docDetail' => $this->input->post('input_docDetail'),
+			);
+		$this->db->insert('file_document',$data_insert);
+	}
 
 	function upload_fileDoc(){  //upload file process
 
@@ -46,23 +56,43 @@ class Model_main extends CI_model{
 		$this->upload->initialize($config);
 		if($this->upload->do_upload('file_doc')){	//ถ้า upload ไม่มีปัญหา
 
-			$data_fileProject = $this->upload->data();
-			$data_insert = array(
-				'file_docId' =>'',
-				'file_subName' => $this->input->post('input_docName'),
-				'file_docPath' => $_FILES['file_doc']['name'],
-				'file_docDetail' => $this->input->post('input_docDetail'),
-				);
-			$this->db->insert('file_document',$data_insert);
-			return $data_fileProject;
+			$this->Model_main->insert_doc();
+			return TRUE;
 
 		}
 		else{
-			echo $this->upload->display_errors()."error_doc  ";		}
+			// echo $this->upload->display_errors()."error_doc  ";
+			// return FALSE;
+			$data = array(
+				'active' => "document",
+				'show_doc' => $this->Model_main->get_doc(),
+				'file_error' => 'กรุณาเลือกไฟล์',
+				);
+			$this->load->view('admin/manage_document',$data);
+		}
 
 		return true;
 	}
 
-}
+	function get_doc(){
+		$get_doc = $this->db->get('file_document')->result();
+		return $get_doc;
+	}
 
-?>
+	function delete_fileDoc($doc_id){
+
+		$this->db->where('file_docId',$doc_id);
+		$query =$this->db->get('file_document',0,0)->result();
+		foreach ($query as $row_fileDoc) {
+			$id =  $row_fileDoc->file_subName;
+			$file_name = $row_fileDoc->file_docPath;
+		}
+				unlink('./files_upload/file_document/'.$file_name);	//delete file
+				$this->db->where('file_docId',$doc_id);
+				$this->db->delete('file_document');
+				return TRUE;
+			}
+
+		}
+
+		?>
