@@ -5,8 +5,7 @@ class Welcome extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('Model_main','',TRUE);
-	}
+		$this->load->model('Model_main','',TRUE);	}
 
 	public function index(){
 		$data = array(
@@ -76,16 +75,17 @@ class Welcome extends CI_Controller {
 
 
 		if( $this->form_validation->run() === FALSE ){
-			$data = array(
-				'active' => "document",
-				'show_doc' => $this->Model_main->get_doc(),
-				);
-			$this->load->view('admin/manage_document',$data);
+			// $data = array(
+			// 	'active' => "document",
+			// 	'show_doc' => $this->Model_main->get_doc(),
+			// 	);
+			//$this->load->view('admin/manage_document',$data);
+			$this->mngDocument();	//load function mngDocument()
 			return false;
 		}else{
 			$this->Model_main->upload_fileDoc();		//upload document file --> function upload_fileDoc()
 		}
-		redirect('Welcome/mngDocument','refresh');
+		$this->mngDocument();		//load function mngDocument()
 	}
 
 	public function del_docID($doc_id=""){

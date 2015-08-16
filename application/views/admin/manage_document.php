@@ -32,7 +32,9 @@
 						<div class="col-sm-4 ">
 							<input type="file" id="file_doc" class="form-control" name="file_doc" value="" size="20" />
 							<?php
-							if(empty($file_error)){
+							if(!empty($file_error)){
+								echo '<div class="form_error1">::',$file_error.'::</div>';
+							}else{
 								echo '
 								<div class="progress">
 									<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
@@ -40,8 +42,6 @@
 									</div>
 								</div>
 								';
-							}else{
-								echo '<div class="form_error1">::',$file_error.'::</div>';
 							}
 							?>
 						</div>

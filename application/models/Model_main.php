@@ -2,6 +2,7 @@
 class Model_main extends CI_model{
 	public function __construct(){
 		parent::__construct();
+		date_default_timezone_set('Asia/Bangkok');
 	}
 
 	function insert_dataUniversity(){
@@ -68,8 +69,7 @@ class Model_main extends CI_model{
 				'show_doc' => $this->Model_main->get_doc(),
 				'file_error' => 'กรุณาเลือกไฟล์',
 				);
-			$this->load->view('admin/manage_document',$data);
-		}
+			$this->load->view('admin/manage_document',$data);		}
 
 		return true;
 	}
