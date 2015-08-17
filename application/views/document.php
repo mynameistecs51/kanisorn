@@ -10,19 +10,20 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			<span class="glyphicon glyphicon-star"></span>
-			<span class="glyphicon glyphicon-star"></span>
-			<span class="glyphicon glyphicon-star"></span>
-			<span class="glyphicon glyphicon-star"></span>
-			<span class="glyphicon glyphicon-star-empty"></span>
-			Anonymous
-			<span class="pull-right">10 days ago</span>
-			<p>This product was great in terms of quality. I would definitely buy another!</p>
+			<?php foreach ($show_doc as $row_doc) : ?>
+				<p>
+					<b><?php echo $row_doc->file_subName;?></b>
+					<span class="pull-right text-warning">
+						<?php
+						echo anchor('Welcome/download/'.$row_doc->file_docPath, '<--Download');
+						?>
+					</span>
+					<br/><?php echo $row_doc->file_docDetail;?>
+				</p>
+				<hr/>
+			<?php endforeach ?>
 		</div>
 	</div>
-
-	<hr>
-
 </div> <!-- /.end show document -->
 
 <?php $this->load->view('footer');?>
