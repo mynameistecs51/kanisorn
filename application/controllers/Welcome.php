@@ -5,16 +5,18 @@ class Welcome extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('Model_main','',TRUE);	}
+		$this->load->model('Model_main','',TRUE);
+		date_default_timezone_set('Asia/Bangkok');
+	}
 
-		public function index(){
-			$data = array(
+	public function index(){
+		$data = array(
 			'active' => "history",	//select menu active
 			'get_university' => $this->Model_main->get_University(),
 			);
 
-			$this->load->view('index',$data);
-		}
+		$this->load->view('index',$data);
+	}
 
 	public function management(){  //management page
 		$data = array(
@@ -79,8 +81,9 @@ class Welcome extends CI_Controller {
 			return false;
 		}else{
 			$this->Model_main->upload_fileDoc();		//upload document file --> function upload_fileDoc()
-		}
 		$this->mngDocument();		//load function mngDocument()
+		}
+		redirect('Welcome/mngDocument','refresh');
 	}
 
 	public function del_docID($doc_id=""){

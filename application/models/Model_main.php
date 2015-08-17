@@ -33,31 +33,32 @@ class Model_main extends CI_model{
 		$this->db->delete('university');
 		return TRUE;
 	}
-	function insert_doc(){
-		$data_fileProject = $this->upload->data();
+	function insert_doc($name_file){
 		$data_insert = array(
 			'file_docId' =>'',
 			'file_subName' => $this->input->post('input_docName'),
-			'file_docPath' => $_FILES['file_doc']['name'],
+			'file_docPath' => $name_file,
 			'file_docDetail' => $this->input->post('input_docDetail'),
 			);
 		$this->db->insert('file_document',$data_insert);
 	}
 
 	function upload_fileDoc(){  //upload file process
-
+		$file_name =  date('d_m_y_H_i_s');
 		$config['upload_path'] =  './files_upload/file_document';
 		// die(var_dump(is_dir($config['upload_path']))); 
 		$config['allowed_types'] = 'doc|docx|pdf|jpg|jpeg|png|';
 		$config['max_size'] = '7000';	// 7mb
-		$config['file_name'] = $_FILES['file_doc']['name'];		//fiel_name
+		$config['file_name'] = $file_name.$_FILES['file_doc']['name'];		//fiel_name
 		$config['remove_spaces'] = TRUE;
+
+		$name_file = $config['file_name'] = $file_name.$_FILES['file_doc']['name'];		//fiel_name
 
 		$this->load->library("upload",$config);		//library upload
 		$this->upload->initialize($config);
 		if($this->upload->do_upload('file_doc')){	//ถ้า upload ไม่มีปัญหา
 
-			$this->Model_main->insert_doc();
+			$this->Model_main->insert_doc($name_file);
 			return TRUE;
 
 		}
@@ -76,7 +77,7 @@ class Model_main extends CI_model{
 	}
 
 	function update_file($file_docId){
-		 $file_name =  date('d_m_y_H_i_s');
+		$file_name =  date('d_m_y_H_i_s');
 		$db_query = $this->db->query('SELECT * FROM file_document WHERE file_docId='.$file_docId)->result();
 		foreach ($db_query as $row_fileDoc) {
 			unlink('./files_upload/file_document/'.$row_fileDoc->file_docPath);		//ลบรูปเก่าออก
