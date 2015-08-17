@@ -6,7 +6,6 @@ class Welcome extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('Model_main','',TRUE);
-		date_default_timezone_set('Asia/Bangkok');
 	}
 
 	public function index(){
@@ -139,6 +138,13 @@ public function update_document(){
 		$name = $file_name;
 		echo force_download($name,$data);
 		redirect('Welcome/document','refresh');
+	}
+
+	public function read_file($file_name){
+		$this->load->helper('file');
+		// $data = file_get_contents(base_url().'files_upload/file_document/'.$file_name);
+		$name = $file_name;
+		echo $string = fopen(base_url().'files_upload/file_document/'.$name,'r');
 	}
 }
 ?>

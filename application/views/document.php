@@ -15,7 +15,8 @@
 					<b><?php echo $row_doc->file_subName;?></b>
 					<span class="pull-right text-warning">
 						<?php
-						echo anchor('Welcome/download/'.$row_doc->file_docPath, '<--Download');
+						echo anchor('Welcome/download/'.$row_doc->file_docPath, '<--Download')."<br/>";
+						echo anchor(base_url().'files_upload/file_document/'.$row_doc->file_docPath, '<--ReadFile','target="_blank"');
 						?>
 					</span>
 					<br/><?php echo $row_doc->file_docDetail;?>
