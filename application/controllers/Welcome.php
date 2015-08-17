@@ -103,7 +103,7 @@ class Welcome extends CI_Controller {
 			$this->mngDocument();
 		}elseif($file_docId != null ){
 			$this->Model_main->update_fileDoc($file_docId);
-			$this->mngDocument();
+			//$this->mngDocument();
 		}else{
 			redirect('Welcome/mngDocument','refresh');
 		}

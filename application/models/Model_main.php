@@ -117,7 +117,6 @@ class Model_main extends CI_model{
 
 	function update_fileDoc($file_docId){
 		$data_update = array(
-			'file_docId' =>'$file_docId',
 			'file_subName' => $this->input->post('input_docName'),
 			'file_docDetail' => $this->input->post('input_docDetail'),
 			);
