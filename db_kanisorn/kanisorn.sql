@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.3.11
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Aug 17, 2015 at 12:12 AM
--- Server version: 5.6.21
--- PHP Version: 5.5.19
+-- Host: 127.0.0.1
+-- Generation Time: Aug 17, 2015 at 10:41 AM
+-- Server version: 5.6.24
+-- PHP Version: 5.5.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -27,18 +27,19 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `file_document` (
-`file_docId` int(11) NOT NULL,
+  `file_docId` int(11) NOT NULL,
   `file_subName` text NOT NULL,
   `file_docPath` text NOT NULL,
   `file_docDetail` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `file_document`
 --
 
 INSERT INTO `file_document` (`file_docId`, `file_subName`, `file_docPath`, `file_docDetail`) VALUES
-(0, 'test update', '11351418_1598291317115197_5276429056286462902_n.jpg', 'ทดสอบการอัพเดท');
+(0, 'test update', '17_08_15_16_48_11document.pdf', 'ทดสอบการอัพเดท'),
+(11, 'แก้ไขอัพโหลด', '17_08_15_15_02_121.jpg', 'แกไขการอัพโหลด');
 
 -- --------------------------------------------------------
 
@@ -47,7 +48,7 @@ INSERT INTO `file_document` (`file_docId`, `file_subName`, `file_docPath`, `file
 --
 
 CREATE TABLE IF NOT EXISTS `research` (
-`res_id` int(11) NOT NULL,
+  `res_id` int(11) NOT NULL,
   `res_name` text NOT NULL,
   `res_file` text NOT NULL,
   `res_pict` text NOT NULL,
@@ -61,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `research` (
 --
 
 CREATE TABLE IF NOT EXISTS `university` (
-`uni_id` int(11) NOT NULL,
+  `uni_id` int(11) NOT NULL,
   `uni_data` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
@@ -82,19 +83,19 @@ INSERT INTO `university` (`uni_id`, `uni_data`) VALUES
 -- Indexes for table `file_document`
 --
 ALTER TABLE `file_document`
- ADD PRIMARY KEY (`file_docId`);
+  ADD PRIMARY KEY (`file_docId`);
 
 --
 -- Indexes for table `research`
 --
 ALTER TABLE `research`
- ADD PRIMARY KEY (`res_id`);
+  ADD PRIMARY KEY (`res_id`);
 
 --
 -- Indexes for table `university`
 --
 ALTER TABLE `university`
- ADD PRIMARY KEY (`uni_id`);
+  ADD PRIMARY KEY (`uni_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -104,17 +105,17 @@ ALTER TABLE `university`
 -- AUTO_INCREMENT for table `file_document`
 --
 ALTER TABLE `file_document`
-MODIFY `file_docId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `file_docId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `research`
 --
 ALTER TABLE `research`
-MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
-MODIFY `uni_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `uni_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
