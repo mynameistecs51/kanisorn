@@ -4,7 +4,7 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">จัดการเอกสาร</div>
 		<div class="panel-body ">
-			<?php echo form_open_multipart('Welcome/#',' class="form-horizontal" role="form" ');?>
+			<?php echo form_open_multipart('Welcome/#',' class="form-horizontal dropzone"   id="my-awesome-dropzone" role="form" ');?>
 			<div class="form-group col-sm-12">
 				<label for="input_docName" class="col-md-2 control-label">ชื่อวิชางานวิจัย </label>
 				<div class="col-sm-4">
@@ -19,6 +19,24 @@
 							<span class="sr-only">Loading %</span>
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="form-group col-sm-12">
+				<label for="input_docDetail" class="col-md-2 control-label">ภาพกิจกรรม</label>
+				<div class="col-sm-10 fallback">
+					<input type="file" name="file" class="form-control"  multiple  />
+					<label class="text-helper" style="color:red">**กรอกรายละเอียดพอสังเขป**</label>
+				</div>
+				<div class="dz-preview dz-file-preview">
+					<div class="dz-details">
+						<div class="dz-filename"><span data-dz-name></span></div>
+						<div class="dz-size" data-dz-size></div>
+						<img data-dz-thumbnail />
+					</div>
+					<div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+					<div class="dz-success-mark"><span>✔</span></div>
+					<div class="dz-error-mark"><span>✘</span></div>
+					<div class="dz-error-message"><span data-dz-errormessage></span></div>
 				</div>
 			</div>
 			<div class="form-group col-sm-12">
@@ -58,5 +76,17 @@
 	<hr>
 
 </div> <!-- /.end show history -->
+<script src="<?php echo base_url();?>js/dropzone.js" ></script>
+<script type="text/javascript">
+	$( document ).ready(function() {
+		Dropzone.autoDiscover = false;
+
+		$(function() {
+			var myDropzone = new Dropzone("#my-dropzone");
+			myDropzone.on("addedfile", function(file) {
+			});
+		})
+	});
+</script>
 
 <?php $this->load->view('footer');?>
