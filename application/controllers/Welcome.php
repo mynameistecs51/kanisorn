@@ -116,12 +116,27 @@ public function update_document(){
 		$this->load->view('admin/manage_research',$data);
 	}
 
+public function research(){
+	$data = array(
+		'active' => "research",
+		);
+	$this->load->view('research',$data);
+}
+
 	public function table_taecher(){
 		$data = array(
 			'active' => 'table_taecher',
 			);
 		$this->load->view('admin/mngTable',$data);
 	}
+
+	public function show_table(){
+		$data = array(
+			'active' => "table_taecher",
+			);
+		$this->load->view('table',$data);
+	}
+
 	public function contact(){	//show contact
 		$data = array(
 			'active' => 'contact',

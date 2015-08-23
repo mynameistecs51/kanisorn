@@ -97,9 +97,9 @@
 					$a = ($active == 'document' ? 'active' : '');
 					echo anchor('Welcome/document','<i class="fa fa-book"> เอกสารการสอน</i>','class="list-group-item '.$a.'"');
 					$a = ($active == 'research' ? 'active' : '');
-					echo anchor('#','<i class="fa fa-newspaper-o"> งานวิจัย</i>','class="list-group-item '.$a.'"');
+					echo anchor('Welcome/research','<i class="fa fa-newspaper-o"> งานวิจัย</i>','class="list-group-item '.$a.'"');
 					$a = ($active == 'table_taecher' ? 'active':'');
-					echo anchor('#','<i class="fa fa-newspaper-o"> ตารางสอน</i>','class="list-group-item '.$a.'"');
+					echo anchor('Welcome/show_table','<i class="fa fa-newspaper-o"> ตารางสอน</i>','class="list-group-item '.$a.'"');
 					$a = ($active == 'contact' ? 'active': '');
 					echo anchor('Welcome/contact','<i class="fa fa-commenting"> ติดต่อ</i>','class="list-group-item '.$a.'"');
 					?>
