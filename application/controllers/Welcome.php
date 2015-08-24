@@ -116,12 +116,12 @@ public function update_document(){
 		$this->load->view('admin/manage_research',$data);
 	}
 
-public function research(){
-	$data = array(
-		'active' => "research",
-		);
-	$this->load->view('research',$data);
-}
+	public function research(){
+		$data = array(
+			'active' => "research",
+			);
+		$this->load->view('research',$data);
+	}
 
 	public function table_taecher(){
 		$data = array(
@@ -160,6 +160,20 @@ public function research(){
 		// $data = file_get_contents(base_url().'files_upload/file_document/'.$file_name);
 		$name = $file_name;
 		echo $string = fopen(base_url().'files_upload/file_document/'.$name,'r');
+	}
+
+	public function upload_dropzone() {
+		if (!empty($_FILES)) {
+			$tempFile = $_FILES['file']['tmp_name'];
+			$fileName = $_FILES['file']['name'];
+			$targetPath = getcwd() . '/uploads/';
+			$targetFile = $targetPath . $fileName ;
+			move_uploaded_file($tempFile, $targetFile);
+			// if you want to save in db,where here
+			// with out model just for example
+			// $this->load->database(); // load database
+			// $this->db->insert('file_table',array('file_name' => $fileName));
+		}
 	}
 }
 ?>
