@@ -138,12 +138,17 @@ class Model_main extends CI_model{
 			$id =  $row_fileDoc->file_subName;
 			$file_name = $row_fileDoc->file_docPath;
 		}
-				unlink('./files_upload/file_document/'.$file_name);	//delete file
-				$this->db->where('file_docId',$doc_id);
-				$this->db->delete('file_document');
-				return TRUE;
-			}
+		unlink('./files_upload/file_document/'.$file_name);	//delete file
+		$this->db->where('file_docId',$doc_id);
+		$this->db->delete('file_document');
+		return TRUE;
+	}
 
-		}
+	function get_tableTeacher(){
+		$get_tableTeacher = $this->db->get('table_teacher')->result();
+		return $get_tableTeacher;
+	}
 
-		?>
+}
+
+?>

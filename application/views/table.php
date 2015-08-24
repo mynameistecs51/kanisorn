@@ -10,7 +10,10 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			<img class="col-md-12" src="<?php echo base_url();?>files_upload/16-8-255813-31-10.jpg"/>
+		<?php foreach ($table_taecher as $row_table) {
+			echo '<img class="col-md-12" src="'.base_url().'files_upload/'.$row_table->table_name.'"/>';
+		}
+		?>
 		</div>
 	</div>
 

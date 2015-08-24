@@ -133,6 +133,7 @@ public function update_document(){
 	public function show_table(){
 		$data = array(
 			'active' => "table_taecher",
+			'table_taecher' => $this->Model_main->get_tableTeacher(),
 			);
 		$this->load->view('table',$data);
 	}
@@ -175,5 +176,6 @@ public function update_document(){
 			// $this->db->insert('file_table',array('file_name' => $fileName));
 		}
 	}
+
 }
 ?>
