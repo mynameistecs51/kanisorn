@@ -116,6 +116,36 @@ public function update_document(){
 		$this->load->view('admin/manage_research',$data);
 	}
 
+	function insert_research(){
+		$data_research  = array(
+			'res_id' => '',
+			'res_name' => $tihs->input->post('input_docName'),
+			'res_file' => $_FILES['file_doc']['name'],
+			'file_pic' => $_FILES['file_pic']['name'],
+			'res_detail' => $this->input->post('input_docDetail'),
+			'res_type' => $this->input->post('research_type'),
+
+			);
+	}
+
+	private function _upload_files($field='userfile'){		//upload file picture about research
+		$files = array();
+		foreach( $_FILES[$field] as $key => $all ){
+			foreach( $all as $i => $val ){
+				$files[$i][$key] = $val;
+			}
+		}
+		$files_uploaded = array();
+		for ($i=0; $i < count($files); $i++) { 
+			$_FILES[$field] = $files[$i];
+			if ($this->upload->do_upload($field))
+				$files_uploaded[$i] = $this->upload->data($files);
+			else
+				$files_uploaded[$i] = null;
+		}
+		return $files_uploaded;
+	}
+
 	public function research(){
 		$data = array(
 			'active' => "research",
@@ -161,20 +191,6 @@ public function update_document(){
 		// $data = file_get_contents(base_url().'files_upload/file_document/'.$file_name);
 		$name = $file_name;
 		echo $string = fopen(base_url().'files_upload/file_document/'.$name,'r');
-	}
-
-	public function upload_dropzone() {
-		if (!empty($_FILES)) {
-			$tempFile = $_FILES['file']['tmp_name'];
-			$fileName = $_FILES['file']['name'];
-			$targetPath = getcwd() . '/uploads/';
-			$targetFile = $targetPath . $fileName ;
-			move_uploaded_file($tempFile, $targetFile);
-			// if you want to save in db,where here
-			// with out model just for example
-			// $this->load->database(); // load database
-			// $this->db->insert('file_table',array('file_name' => $fileName));
-		}
 	}
 
 }
