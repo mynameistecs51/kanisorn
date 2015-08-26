@@ -121,8 +121,8 @@ public function update_document(){
 		$file_namePic = array();
 		for($i = 0; $i < count($_FILES['files_pic']['name']); $i++){
 			//$file_namePic = array($date.$_FILES['files_pic']['name'][$i]);
-			$file_namePic = array($date.$_FILES['files_pic']['name'][$i]);
-			print_r($file_namePic);
+			//$file_namePic .= implode(',',$_FILES['files_pic']['name']);
+			//print_r($file_namePic);
 		}
 
 		//echo explode(',',$file_namePic);
@@ -133,7 +133,9 @@ public function update_document(){
 		$this->load->library('upload');
 		$this->upload->initialize($config);
 
-
+		$a = implode(',',$_FILES['files_pic']['name']);
+		$b = explode(',', $a);
+print_r($b);
 	//$config['file_name'] =$name_picture;//----------------file_name
 		/*if($_FILES['files_pic']){
 			$images= $this->_upload_files('file_namePic');
