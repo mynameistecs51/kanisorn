@@ -117,18 +117,45 @@ public function update_document(){
 	}
 
 	function insert_research(){
-		$data_research  = array(
-			'res_id' => '',
-			'res_name' => $tihs->input->post('input_docName'),
-			'res_file' => $_FILES['file_doc']['name'],
-			'file_pic' => $_FILES['file_pic']['name'],
-			'res_detail' => $this->input->post('input_docDetail'),
-			'res_type' => $this->input->post('research_type'),
+		$date = date('d-m-y');
+		$file_namePic = array();
+		for($i = 0; $i < count($_FILES['files_pic']['name']); $i++){
+			//$file_namePic = array($date.$_FILES['files_pic']['name'][$i]);
+			$file_namePic = array($date.$_FILES['files_pic']['name'][$i]);
+			print_r($file_namePic);
+		}
 
-			);
+		//echo explode(',',$file_namePic);
+		$config['upload_path'] ='./files_upload/file_picture/';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['file_name'] = $file_namePic;
+		//$config['max_size']	= '70000';
+		$this->load->library('upload');
+		$this->upload->initialize($config);
+
+
+	//$config['file_name'] =$name_picture;//----------------file_name
+		/*if($_FILES['files_pic']){
+			$images= $this->_upload_files('file_namePic');
+			foreach ($images as $key => $value) {
+			# code...
+				//$name_picture .=$value['file_name'].",";		//------------./ show list name picture./---------//
+				print_r($value);
+			}
+			$data_research  = array(
+				'res_id' => '',
+				'res_name' => $this->input->post('input_docName'),
+				'res_file' => $_FILES['file_doc']['name'],
+				'file_pic' => substr($file_namePic,0,-1),
+				'res_detail' => $this->input->post('input_docDetail'),
+				'res_type' => $this->input->post('research_type'),
+				);
+			echo "<pre>";
+			//print_r($data_research);
+		} */
 	}
 
-	private function _upload_files($field='userfile'){		//upload file picture about research
+	private function _upload_files($field='file_namePic'){		//upload file picture about research
 		$files = array();
 		foreach( $_FILES[$field] as $key => $all ){
 			foreach( $all as $i => $val ){

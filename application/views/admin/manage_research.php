@@ -8,7 +8,7 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">จัดการเอกสาร</div>
 		<div class="panel-body ">
-			<?php echo form_open_multipart('Welcome/#',' class="form-horizontal "  role="form" ');?>
+			<?php echo form_open_multipart('Welcome/insert_research',' class="form-horizontal "  role="form" ');?>
 			<div class="form-group col-sm-12">
 				<label for="input_docName" class="col-md-2 control-label">ชื่อวิชางานวิจัย </label>
 				<div class="col-sm-4">
@@ -28,7 +28,7 @@
 			<div class="form-group col-sm-12">
 				<label for="input_docDetail" class="col-md-2 control-label">ภาพกิจกรรม</label>
 				<div class="col-sm-10  "  >
-					<input type="file" name="files_pic" class="form-control"   id="files_pic" multiple   />
+					<input type="file" name="files_pic[]" class="form-control"   id="files_pic[]" multiple   />
 					<output id="list"></output>
 					<label class="text-helper" style="color:red">**เพิ่มไม่เกิน 4 ภาพ**</label>
 					<div class="dz-default dz-message"></div>
@@ -106,7 +106,7 @@
       reader.readAsDataURL(f);
    }
 }
-document.getElementById('files_pic').addEventListener('change', handleFileSelect, false);
+document.getElementById('files_pic[]').addEventListener('change', handleFileSelect, false);
 
 </script>
 <?php $this->load->view('footer');?>
