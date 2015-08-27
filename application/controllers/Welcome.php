@@ -81,33 +81,33 @@ class Welcome extends CI_Controller {
 			return false;
 		}else{
 			$this->Model_main->upload_fileDoc();		//upload document file --> function upload_fileDoc()
-		$this->mngDocument();		//load function mngDocument()
-	}
-	redirect('Welcome/mngDocument','refresh');
-}
-
-public function del_docID($doc_id=""){
-	if(!$doc_id){
-		redirect('Welcome/mngDocument','refresh');
-		return false;
-	}else{
-		$this->Model_main->delete_fileDoc($doc_id);
+			$this->mngDocument();		//load function mngDocument()
+		}
 		redirect('Welcome/mngDocument','refresh');
 	}
-}
-public function update_document(){
-	$file_docId = $this->input->post('file_docId');
 
-	if(!empty($_FILES['file_doc']['name'])){
-		$this->Model_main->update_file($file_docId);
-		$this->mngDocument();
-	}elseif($file_docId != null ){
-		$this->Model_main->update_fileDoc($file_docId);
+	public function del_docID($doc_id=""){
+		if(!$doc_id){
+			redirect('Welcome/mngDocument','refresh');
+			return false;
+		}else{
+			$this->Model_main->delete_fileDoc($doc_id);
+			redirect('Welcome/mngDocument','refresh');
+		}
+	}
+	public function update_document(){
+		$file_docId = $this->input->post('file_docId');
+
+		if(!empty($_FILES['file_doc']['name'])){
+			$this->Model_main->update_file($file_docId);
+			$this->mngDocument();
+		}elseif($file_docId != null ){
+			$this->Model_main->update_fileDoc($file_docId);
 			//$this->mngDocument();
-	}else{
-		redirect('Welcome/mngDocument','refresh');
+		}else{
+			redirect('Welcome/mngDocument','refresh');
+		}
 	}
-}
 
 	public function mngResearch(){	//management research
 		$data = array(
@@ -124,53 +124,54 @@ public function update_document(){
 			//$file_namePic .= implode(',',$_FILES['files_pic']['name']);
 			//print_r($file_namePic);
 		}
-		echo "<pre>";
+		$xx = "";
+		for($i= 0 ; $i < count($_FILES['files_pic']['name']) ; $i++ ){
+			$xx .= trim($date.$_FILES['files_pic']['name'][$i].",");
+
+		}
+		$b = substr($xx,0,-1);
+		$file_namePic = explode(',',$b);
 		//echo explode(',',$file_namePic);
 		$config['upload_path'] ='./files_upload/file_picture/';
 		$config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|';
 		$config['file_name'] = $file_namePic;
 		$config['max_size']	= '50'; //MB
-		$this->load->library('upload');
-		$this->upload->initialize($config);
-		$xx = "";
-		for($i= 0 ; $i < count($_FILES['files_pic']['name']) ; $i++ ){
-			$xx .= $date.$_FILES['files_pic']['name'][$i]." ";
 
-		}
-		$b = substr($xx,0,-1);
-		$file_namePic = explode(' ',$b);
+		$this->load->library("upload",$config);		//library upload
+		$this->upload->initialize($config);
 	//$config['file_name'] =$name_picture;//----------------file_name
-		if($_FILES['files_pic']){
-			$images= $this->_upload_files('file_namePic');
-			foreach ($images as $key => $value) {
-			# code...
-				//$name_picture .=$value['file_name'].",";		//------------./ show list name picture./---------//
-				print_r($value);
-			}
+		if($this->upload->do_upload('files_pic')){
+			//$images= $this->_upload_files();
 			$data_research  = array(
 				'res_id' => '',
 				'res_name' => $this->input->post('input_docName'),
 				'res_file' => $_FILES['file_doc']['name'],
-				'file_pic' => substr($file_namePic,0,-1),
+				'file_pic' => $file_namePic,
 				'res_detail' => $this->input->post('input_docDetail'),
 				'res_type' => $this->input->post('research_type'),
 				);
-			echo "<pre>";
-			//print_r($data_research);
+
+			print_r($data_research);
+		}else{
+			echo "upload faile";
+			echo $this->upload->display_errors();
+			print_r($config);
 		}
 	}
 
-	private function _upload_files($field='file_namePic'){		//upload file picture about research
+	private function _upload_files(){		//upload file picture about research
 		$files = array();
-		foreach( $_FILES[$field] as $key => $all ){
-			foreach( $all as $i => $val ){
-				$files[$i][$key] = $val;
+		$date = date('d-m-y');
+		foreach ($_FILES['files_pic'] as $key => $all) {
+			foreach ($all as $i => $val) {
+				$files[$i][$key] = trim($date.$val);
 			}
 		}
+
 		$files_uploaded = array();
 		for ($i=0; $i < count($files); $i++) {
-			$_FILES[$field] = $files[$i];
-			if ($this->upload->do_upload($field))
+			$_FILES['files_pic'] = $files[$i];
+			if ($this->upload->do_upload('files_pic'))
 				$files_uploaded[$i] = $this->upload->data($files);
 			else
 				$files_uploaded[$i] = null;

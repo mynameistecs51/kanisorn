@@ -44,8 +44,8 @@
 			<div class="form-group col-sm-12">
 				<label for="input_docDetail" class="col-md-2 control-label">ประเภทงานวิจัย</label>
 				<div class="radio col-sm-10">
-					<label><input type="radio" id='national' checked="true" name="research_type">Natinal </label>&nbsp;&nbsp;
-					<label><input type="radio" id="international" name="research_type">Internation</label>
+					<label><input type="radio" id='national' checked="true" name="research_type" value="national">Natinal </label>&nbsp;&nbsp;
+					<label><input type="radio" id="international" name="research_type" value="international">Internation</label>
 				</div>
 			</div>
 			<div class="form-group col-sm-12 ">
