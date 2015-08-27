@@ -135,7 +135,7 @@ public function update_document(){
 
 		$a = implode(',',$_FILES['files_pic']['name']);
 		$b = explode(',', $a);
-print_r($b);
+print_r($b); 
 	//$config['file_name'] =$name_picture;//----------------file_name
 		/*if($_FILES['files_pic']){
 			$images= $this->_upload_files('file_namePic');
