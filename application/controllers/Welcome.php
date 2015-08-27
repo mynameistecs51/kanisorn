@@ -124,20 +124,23 @@ public function update_document(){
 			//$file_namePic .= implode(',',$_FILES['files_pic']['name']);
 			//print_r($file_namePic);
 		}
-
+		echo "<pre>";
 		//echo explode(',',$file_namePic);
 		$config['upload_path'] ='./files_upload/file_picture/';
-		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|';
 		$config['file_name'] = $file_namePic;
-		//$config['max_size']	= '70000';
+		$config['max_size']	= '50'; //MB
 		$this->load->library('upload');
 		$this->upload->initialize($config);
+		$xx = "";
+		for($i= 0 ; $i < count($_FILES['files_pic']['name']) ; $i++ ){
+			$xx .= $date.$_FILES['files_pic']['name'][$i]." ";
 
-		$a = implode(',',$_FILES['files_pic']['name']);
-		$b = explode(',', $a);
-print_r($b); 
+		}
+		$b = substr($xx,0,-1);
+		$file_namePic = explode(' ',$b);
 	//$config['file_name'] =$name_picture;//----------------file_name
-		/*if($_FILES['files_pic']){
+		if($_FILES['files_pic']){
 			$images= $this->_upload_files('file_namePic');
 			foreach ($images as $key => $value) {
 			# code...
@@ -154,7 +157,7 @@ print_r($b);
 				);
 			echo "<pre>";
 			//print_r($data_research);
-		} */
+		}
 	}
 
 	private function _upload_files($field='file_namePic'){		//upload file picture about research
@@ -165,7 +168,7 @@ print_r($b);
 			}
 		}
 		$files_uploaded = array();
-		for ($i=0; $i < count($files); $i++) { 
+		for ($i=0; $i < count($files); $i++) {
 			$_FILES[$field] = $files[$i];
 			if ($this->upload->do_upload($field))
 				$files_uploaded[$i] = $this->upload->data($files);
