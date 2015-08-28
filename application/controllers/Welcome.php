@@ -117,66 +117,25 @@ class Welcome extends CI_Controller {
 	}
 
 	function insert_research(){
-		$date = date('d-m-y');
-		$file_namePic = array();
-		for($i = 0; $i < count($_FILES['files_pic']['name']); $i++){
-			//$file_namePic = array($date.$_FILES['files_pic']['name'][$i]);
-			//$file_namePic .= implode(',',$_FILES['files_pic']['name']);
-			//print_r($file_namePic);
-		}
-		$xx = "";
-		for($i= 0 ; $i < count($_FILES['files_pic']['name']) ; $i++ ){
-			$xx .= trim($date.$_FILES['files_pic']['name'][$i].",");
+		echo "<pre>";
+		$config['upload_path'] 	 =  './files_upload/file_picture/';
+		$config['allowed_types']   	 = 'gif|jpg|png';
+		$config['file_name']		 = $_FILES['files_pic']['name'];
+		$config['max_size']           	 = 100;
 
-		}
-		$b = substr($xx,0,-1);
-		$file_namePic = explode(',',$b);
-		//echo explode(',',$file_namePic);
-		$config['upload_path'] ='./files_upload/file_picture/';
-		$config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|';
-		$config['file_name'] = $file_namePic;
-		$config['max_size']	= '50'; //MB
-
-		$this->load->library("upload",$config);		//library upload
+		$this->load->library('upload', $config);
 		$this->upload->initialize($config);
-	//$config['file_name'] =$name_picture;//----------------file_name
-		if($this->upload->do_upload('files_pic')){
-			//$images= $this->_upload_files();
-			$data_research  = array(
-				'res_id' => '',
-				'res_name' => $this->input->post('input_docName'),
-				'res_file' => $_FILES['file_doc']['name'],
-				'file_pic' => $file_namePic,
-				'res_detail' => $this->input->post('input_docDetail'),
-				'res_type' => $this->input->post('research_type'),
-				);
+		if ( ! $this->upload->do_upload()){
+			$error = array('error' => $this->upload->display_errors());
 
-			print_r($data_research);
-		}else{
-			echo "upload faile";
-			echo $this->upload->display_errors();
+			print_r($error);
 			print_r($config);
 		}
-	}
+		else{
+			$data = array('upload_data' => $this->upload->data());
 
-	private function _upload_files(){		//upload file picture about research
-		$files = array();
-		$date = date('d-m-y');
-		foreach ($_FILES['files_pic'] as $key => $all) {
-			foreach ($all as $i => $val) {
-				$files[$i][$key] = trim($date.$val);
-			}
+			print_r($data);
 		}
-
-		$files_uploaded = array();
-		for ($i=0; $i < count($files); $i++) {
-			$_FILES['files_pic'] = $files[$i];
-			if ($this->upload->do_upload('files_pic'))
-				$files_uploaded[$i] = $this->upload->data($files);
-			else
-				$files_uploaded[$i] = null;
-		}
-		return $files_uploaded;
 	}
 
 	public function research(){

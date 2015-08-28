@@ -17,7 +17,7 @@
 
 				<label for="file_doc" class="col-sm-2 control-label" >เพิ่มไฟล์ .pdf</label>
 				<div class="col-sm-4  ">
-					<input type="file" id="file_doc" class="form-control" name="file_doc" size="20" />
+					<!-- <input type="file" id="file_doc" class="form-control" name="file_doc" size="20" /> -->
 					<div class="progress">
 						<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
 							<span class="sr-only">Loading %</span>
