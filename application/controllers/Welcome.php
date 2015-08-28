@@ -117,6 +117,14 @@ class Welcome extends CI_Controller {
 	}
 
 	function insert_research(){
+		// $xx = "";
+		// for($i= 0 ; $i < count($_FILES['files_pic']['name']) ; $i++ ){
+		// 	$xx .= trim($date.$_FILES['files_pic']['name'][$i].",");
+
+		// }
+		// $b = substr($xx,0,-1);
+		// $file_namePic = explode(',',$b);
+		//echo explode(',',$file_namePic);
 		echo "<pre>";
 		$config['upload_path'] =  './files_upload/file_picture';
 		// die(var_dump(is_dir($config['upload_path'])));
@@ -125,9 +133,26 @@ class Welcome extends CI_Controller {
 		$config['file_name'] = $_FILES['files_pic']['name'];		//file_name
 		//$config['remove_spaces'] = TRUE;
 
-		$this->load->library('upload',$config);
+		$this->load->library("upload",$config);		//library upload
 		$this->upload->initialize($config);
-		print_r($this->upload->do_upload('files_pic'));
+		if($this->upload->do_upload('file_doc')){	//ถ้า upload ไม่มีปัญหา
+
+			$this->Model_main->insert_doc($name_file);
+			return TRUE;
+
+		}
+		else{
+			// echo $this->upload->display_errors()."error_doc  ";
+			// return FALSE;
+			$data = array(
+				'active' => "document",
+				'show_doc' => $this->Model_main->get_doc(),
+				'file_error' => 'กรุณาเลือกไฟล์',
+				);
+			$this->load->view('admin/manage_document',$data);
+		}
+
+		return true;
 
 	}
 
