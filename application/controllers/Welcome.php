@@ -118,47 +118,42 @@ class Welcome extends CI_Controller {
 
 	function insert_research(){
 		echo "<pre>";
-		$config['upload_path'] 	 =  './files_upload/file_picture/';
-		$config['allowed_types']   	 = 'gif|jpg|png';
-		$config['file_name']		 = $_FILES['files_pic']['name'];
-		$config['max_size']           	 = 100;
+		$config['upload_path'] =  './files_upload/file_picture';
+		// die(var_dump(is_dir($config['upload_path'])));
+		$config['allowed_types'] = 'doc|docx|pdf|jpg|jpeg|png|';
+		//$config['max_size'] = '0';	// 7mb
+		$config['file_name'] = $_FILES['files_pic']['name'];		//file_name
+		//$config['remove_spaces'] = TRUE;
 
-		$this->load->library('upload', $config);
+		$this->load->library('upload',$config);
 		$this->upload->initialize($config);
-		if ( ! $this->upload->do_upload()){
-			$error = array('error' => $this->upload->display_errors());
+		print_r($this->upload->do_upload('files_pic'));
 
-			print_r($error);
-			print_r($config);
+	}
+
+
+
+		public function research(){
+			$data = array(
+				'active' => "research",
+				);
+			$this->load->view('research',$data);
 		}
-		else{
-			$data = array('upload_data' => $this->upload->data());
 
-			print_r($data);
+		public function table_taecher(){
+			$data = array(
+				'active' => 'table_taecher',
+				);
+			$this->load->view('admin/mngTable',$data);
 		}
-	}
 
-	public function research(){
-		$data = array(
-			'active' => "research",
-			);
-		$this->load->view('research',$data);
-	}
-
-	public function table_taecher(){
-		$data = array(
-			'active' => 'table_taecher',
-			);
-		$this->load->view('admin/mngTable',$data);
-	}
-
-	public function show_table(){
-		$data = array(
-			'active' => "table_taecher",
-			'table_taecher' => $this->Model_main->get_tableTeacher(),
-			);
-		$this->load->view('table',$data);
-	}
+		public function show_table(){
+			$data = array(
+				'active' => "table_taecher",
+				'table_taecher' => $this->Model_main->get_tableTeacher(),
+				);
+			$this->load->view('table',$data);
+		}
 
 	public function contact(){	//show contact
 		$data = array(
