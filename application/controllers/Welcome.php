@@ -96,6 +96,7 @@ class Welcome extends CI_Controller {
 			redirect('Welcome/mngDocument','refresh');
 		}
 	}
+
 	public function update_document(){
 		$file_docId = $this->input->post('file_docId');
 
@@ -118,124 +119,57 @@ class Welcome extends CI_Controller {
 	}
 
 	function insert_research(){
-		echo "<pre>";
-		print_r($_FILES['files_pic']);
+		$date = date("d_m_y_H_i");
 		$name_array = array();
 
-		$count = count($_FILES['files_pic']['size']);
-		foreach($_FILES as $key=>$value)
+		$count = count($_FILES['files_pic']['size']);echo "<br/>";
+		foreach($_FILES as $key=>$value){
 			for($s=0; $s<=$count-1; $s++) {
-				$_FILES['files_pic']['name']='xx'.$value['name'][$s];
+				$_FILES['files_pic']['name'] = $date.$s.substr($value['name'][$s],-4);
 				$_FILES['files_pic']['type']    = $value['type'][$s];
 				$_FILES['files_pic']['tmp_name'] = $value['tmp_name'][$s];
 				$_FILES['files_pic']['error']       = $value['error'][$s];
-				$_FILES['files_pic']['size']    = $value['size'][$s];
-				$config['upload_path'] ='./files_upload/file_picture/';
+				$_FILES['files_pic']['size']    = $value['size'][$s];  
+				$config['upload_path'] = './files_upload/file_picture/';
 				$config['allowed_types'] = 'gif|jpg|png';
 				$this->load->library('upload', $config);
-				$this->upload->initialize($config);
 				$this->upload->do_upload('files_pic');
 				$data = $this->upload->data();
+				// $name_array[] = $data['file_name'];
 				$name_array[] = $data['file_name'];
-
+			}
 		}
 		$names= implode(',', $name_array);
-			/* $this->load->database();
-			$db_data = array('id'=> NULL,
-			'name'=> $names);
-			$this->db->insert('testtable',$db_data);
-			*/
-			print_r($names);
-		}
+		/* $this->load->database();
+		$db_data = array('id'=> NULL,
+		'name'=> $names);
+		$this->db->insert('testtable',$db_data);
+		*/	
 
-	/*function insert_research(){
-		$rand = rand(1111,9999);
-		$date= date("d_m_y_H_i");
-		$name_picture = '';
-		$file_namePic = array();
-		$xx = "";
-		for($i= 0 ; $i < count($_FILES['files_pic']['name']) ; $i++ ){
-			$xx .= trim($date.$_FILES['files_pic']['name'][$i].",");
-
-		}
-		$b = substr($xx,0,-1);
-		$file_namePic = explode(',',$b);
-		//print_r($file_namePic);
-		//echo explode(',',$file_namePic);
-		$config['upload_path'] ='./files_upload/file_picture/';
-		$config['allowed_types'] = '*';
-		$config['max_size']	= 0;
-
-		//$config['encrypt_name'] = TRUE;
-		$config['remove_spaces'] = TRUE;
-		//$file_name =$_FILES['images']['name'];
-
-		$this->load->library('upload');
-		$this->upload->initialize($config);
-
-
-	//$config['file_name'] =$name_picture;//----------------file_name
-		if($_FILES['files_pic']){
-			$images= $this->_upload_files('files_pic');
-			foreach ($images as $key => $value) {
-			# code...
-			//print_r($_FILES['files_pic']);
-				$name_picture .=$value['file_name'].',';		//------------./ show list name picture./---------//
-				//print_r($value);
-				//print_r($this->upload->data());
-			}
-			//$config['file_name'] = $HTTP_POST_FILES[$name_picture];
-			echo "<pre>";
-			print_r($name_picture);
-		}
-
+		print_r($name_array);
 	}
 
-	private function _upload_files($field='files_pic'){
-		$date = date('d-m-y');
-		$files = array();
-		foreach( $_FILES[$field] as $key => $all )
-			foreach( $all as $i => $val ){
-				$files[$i][$key] =  $val;
+	public function research(){
+		$data = array(
+			'active' => "research",
+			);
+		$this->load->view('research',$data);
+	}
 
-			}
+	public function table_taecher(){
+		$data = array(
+			'active' => 'table_taecher',
+			);
+		$this->load->view('admin/mngTable',$data);
+	}
 
-
-			$files_uploaded = array();
-			for ($i=0; $i < count($files); $i++) {
-				$_FILES[$field] = $files[$i];
-				if ($this->upload->do_upload($field)){
-					$files_uploaded[$i] = $this->upload->data();
-				}
-				else{
-					$files_uploaded[$i] = null;
-				}
-			}
-			return $files_uploaded;
-		}
-*/
-
-		public function research(){
-			$data = array(
-				'active' => "research",
-				);
-			$this->load->view('research',$data);
-		}
-
-		public function table_taecher(){
-			$data = array(
-				'active' => 'table_taecher',
-				);
-			$this->load->view('admin/mngTable',$data);
-		}
-
-		public function show_table(){
-			$data = array(
-				'active' => "table_taecher",
-				'table_taecher' => $this->Model_main->get_tableTeacher(),
-				);
-			$this->load->view('table',$data);
-		}
+	public function show_table(){
+		$data = array(
+			'active' => "table_taecher",
+			'table_taecher' => $this->Model_main->get_tableTeacher(),
+			);
+		$this->load->view('table',$data);
+	}
 
 	public function contact(){	//show contact
 		$data = array(
