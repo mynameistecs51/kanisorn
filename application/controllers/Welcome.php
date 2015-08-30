@@ -125,60 +125,57 @@ class Welcome extends CI_Controller {
 		// $b = substr($xx,0,-1);
 		// $file_namePic = explode(',',$b);
 		//echo explode(',',$file_namePic);
-		echo "<pre>";
-		$config['upload_path'] =  './files_upload/file_picture';
-		// die(var_dump(is_dir($config['upload_path'])));
-		$config['allowed_types'] = 'doc|docx|pdf|jpg|jpeg|png|';
-		//$config['max_size'] = '0';	// 7mb
-		$config['file_name'] = $_FILES['files_pic']['name'];		//file_name
-		//$config['remove_spaces'] = TRUE;
+		if(!$_FILES['files_pic']){
+			echo "NO Filse";
+		}else{
+			echo "<pre>";
+			$config['upload_path']          = './files_upload/file_picture/';
+			$config['allowed_types']        = 'gif|jpg|png';
+			$config['file_name'] = $_FILES['files_pic']['name'];
 
-		$this->load->library("upload",$config);		//library upload
-		$this->upload->initialize($config);
-		if($this->upload->do_upload('file_doc')){	//ถ้า upload ไม่มีปัญหา
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
 
-			$this->Model_main->insert_doc($name_file);
-			return TRUE;
+print_r($this->upload->data());
+			if ( !$this->upload->do_upload($config)){
+				$error = array('error' => $this->upload->display_errors());
 
+				//print_r($error);
+				//print_r($this->upload->data());
+			}else{
+				$this->upload->initialize($config);
+
+				$data = array('upload_data' => $this->upload->data());
+
+				print_r($data);
+			}
 		}
-		else{
-			// echo $this->upload->display_errors()."error_doc  ";
-			// return FALSE;
-			$data = array(
-				'active' => "document",
-				'show_doc' => $this->Model_main->get_doc(),
-				'file_error' => 'กรุณาเลือกไฟล์',
-				);
-			$this->load->view('admin/manage_document',$data);
-		}
-
-		return true;
 
 	}
 
 
 
-		public function research(){
-			$data = array(
-				'active' => "research",
-				);
-			$this->load->view('research',$data);
-		}
+	public function research(){
+		$data = array(
+			'active' => "research",
+			);
+		$this->load->view('research',$data);
+	}
 
-		public function table_taecher(){
-			$data = array(
-				'active' => 'table_taecher',
-				);
-			$this->load->view('admin/mngTable',$data);
-		}
+	public function table_taecher(){
+		$data = array(
+			'active' => 'table_taecher',
+			);
+		$this->load->view('admin/mngTable',$data);
+	}
 
-		public function show_table(){
-			$data = array(
-				'active' => "table_taecher",
-				'table_taecher' => $this->Model_main->get_tableTeacher(),
-				);
-			$this->load->view('table',$data);
-		}
+	public function show_table(){
+		$data = array(
+			'active' => "table_taecher",
+			'table_taecher' => $this->Model_main->get_tableTeacher(),
+			);
+		$this->load->view('table',$data);
+	}
 
 	public function contact(){	//show contact
 		$data = array(
