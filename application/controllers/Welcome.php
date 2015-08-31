@@ -117,37 +117,32 @@ class Welcome extends CI_Controller {
 			);
 		$this->load->view('admin/manage_research',$data);
 	}
-
 	function insert_research(){
-		$date = date("d_m_y_H_i");
-		$name_array = array();
+		echo "<pre>";
+		// if($_FILES['files_pic'] != ""){
 
-		$count = count($_FILES['files_pic']['size']);echo "<br/>";
-		foreach($_FILES as $key=>$value){
-			for($s=0; $s<=$count-1; $s++) {
-				$_FILES['files_pic']['name'] = $date.$s.substr($value['name'][$s],-4);
-				$_FILES['files_pic']['type']    = $value['type'][$s];
-				$_FILES['files_pic']['tmp_name'] = $value['tmp_name'][$s];
-				$_FILES['files_pic']['error']       = $value['error'][$s];
-				$_FILES['files_pic']['size']    = $value['size'][$s];  
-				$config['upload_path'] = './files_upload/file_picture/';
-				$config['allowed_types'] = 'gif|jpg|png';
-				$this->load->library('upload', $config);
-				$this->upload->do_upload('files_pic');
-				$data = $this->upload->data();
-				// $name_array[] = $data['file_name'];
-				$name_array[] = $data['file_name'];
-			}
+		// 	$uploadPicture = $this->Model_main->insert_pictureResearch('files_pic',$_FILES['files_pic']);
+
+		// 	print_r($uploadPicture);
+		// }else{
+		// 	echo "ON FILE ";
+		// }
+
+		if($_FILES['file_doc'] != ""){
+			$upload_paper = $this->Model_main->insert_documentResearch('file_doc',$_FILES['file_doc'] );
+			$uploadPicture = $this->Model_main->insert_pictureResearch('files_pic',$_FILES['files_pic']);
+			//$data = array('file_doc' => implode(',',$upload_paper));
+			print_r($upload_paper); echo "<br/>";
+			print_r($uploadPicture);
+
+		}else{
+			echo "ON FILE";
 		}
-		$names= implode(',', $name_array);
-		/* $this->load->database();
-		$db_data = array('id'=> NULL,
-		'name'=> $names);
-		$this->db->insert('testtable',$db_data);
-		*/	
 
-		print_r($name_array);
+
 	}
+
+
 
 	public function research(){
 		$data = array(

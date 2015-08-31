@@ -1,5 +1,7 @@
 <?php  defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Model_main extends CI_model{
+
 	public function __construct(){
 		parent::__construct();
 		date_default_timezone_set('Asia/Bangkok');
@@ -33,6 +35,7 @@ class Model_main extends CI_model{
 		$this->db->delete('university');
 		return TRUE;
 	}
+
 	function insert_doc($name_file){
 		$data_insert = array(
 			'file_docId' =>'',
@@ -46,7 +49,7 @@ class Model_main extends CI_model{
 	function upload_fileDoc(){  //upload file process
 		$file_name =  date('d_m_y_H_i_s');
 		$config['upload_path'] =  './files_upload/file_document';
-		// die(var_dump(is_dir($config['upload_path']))); 
+		// die(var_dump(is_dir($config['upload_path'])));
 		$config['allowed_types'] = 'doc|docx|pdf|jpg|jpeg|png|';
 		$config['max_size'] = '7000';	// 7mb
 		$config['file_name'] = $file_name.$_FILES['file_doc']['name'];		//fiel_name
@@ -61,8 +64,7 @@ class Model_main extends CI_model{
 			$this->Model_main->insert_doc($name_file);
 			return TRUE;
 
-		}
-		else{
+		}else{
 			// echo $this->upload->display_errors()."error_doc  ";
 			// return FALSE;
 			$data = array(
@@ -100,8 +102,7 @@ class Model_main extends CI_model{
 			$this->db->where('file_docId',$file_docId);
 			$this->db->update('file_document',$data_update);
 			return TRUE;
-		}
-		else{
+		}else{
 			// echo $this->upload->display_errors()."error_doc  ";
 			// return FALSE;
 			$data = array(
@@ -148,6 +149,60 @@ class Model_main extends CI_model{
 		$get_tableTeacher = $this->db->get('table_teacher')->result();
 		return $get_tableTeacher;
 	}
+
+	function insert_pictureResearch($filed , $file){  		//upload multi file picture  // require filed name & files name
+
+		$date = date("d_m_y_H_i");
+		$name_array = array();
+
+		$count = count($_FILES[$filed]['size']);
+		foreach($_FILES as $key=>$value){
+			for($s=0; $s<=$count-1; $s++) {
+				$_FILES[$filed]['name'] = $date.$s.substr($value['name'][$s],-4);
+				$_FILES[$filed]['type']    = $value['type'][$s];
+				$_FILES[$filed]['tmp_name'] = $value['tmp_name'][$s];
+				$_FILES[$filed]['error']       = $value['error'][$s];
+				$_FILES[$filed]['size']    = $value['size'][$s];
+				$config['upload_path'] = './files_upload/file_picture/';
+				//$config['allowed_types'] = 'gif|jpg|png';
+				$config['allowed_types'] = '*';
+				$this->load->library('upload', $config);
+				$this->upload->do_upload($filed);
+				$data = $this->upload->data();
+				$name_array[] = $data['file_name'];
+			}
+		}
+		//$names_picture= implode(',', $name_array);
+		/*
+		 $this->load->database();
+		$db_data = array('id'=> NULL,
+		'name'=> $names);
+		$this->db->insert('testtable',$db_data);
+		*/
+		return $name_array;
+	}
+
+	function insert_documentResearch($filed,$file){  		//upload multi file picture  // require filed name & files name
+		$date = date('d_m_y_H_i');
+		$name_research = array();
+		$config['upload_path'] = './files_upload/file_research/';
+		$config['allowed_types'] = 'doc|docx|pdf|ppt|pttx|';
+		$config['file_name'] = $date.'.'.substr($_FILES[$filed]['name'],-4);
+
+		// $name_research = $config['file_name'];
+		$this->load->library('upload', $config);
+
+		if ( ! $this->upload->do_upload($filed)){
+			$error = array('error' => $this->upload->display_errors());
+			return $error;
+		}
+		else{
+			$data = $this->upload->data();
+			$name_research[] = $data['file_name'];
+			return $name_research;
+		}
+	}
+
 
 }
 
