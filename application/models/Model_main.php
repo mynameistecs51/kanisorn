@@ -154,11 +154,12 @@ class Model_main extends CI_model{
 
 		$date = date("d_m_y_H_i");
 		$name_array = array();
+		$count = count($_FILES[$filed]['name']);
+		
+		foreach($_FILES as $key => $value){
+			for($s=0; $s < $count; $s++) {	
 
-		$count = count($_FILES[$filed]['size']);
-		foreach($_FILES as $key=>$value){
-			for($s=0; $s<=$count-1; $s++) {
-				$_FILES[$filed]['name'] = $date.$s.substr($value['name'][$s],-4);
+				$_FILES[$filed]['name'] = $date.substr($value['name'][$s],-4);
 				$_FILES[$filed]['type']    = $value['type'][$s];
 				$_FILES[$filed]['tmp_name'] = $value['tmp_name'][$s];
 				$_FILES[$filed]['error']       = $value['error'][$s];
@@ -172,7 +173,7 @@ class Model_main extends CI_model{
 				$name_array[] = $data['file_name'];
 			}
 		}
-		//$names_picture= implode(',', $name_array);
+		$names_picture= implode(',', $name_array);
 		/*
 		 $this->load->database();
 		$db_data = array('id'=> NULL,
@@ -181,7 +182,6 @@ class Model_main extends CI_model{
 		*/
 		return $name_array;
 	}
-
 	function insert_documentResearch($filed,$file){  		//upload multi file picture  // require filed name & files name
 		$date = date('d_m_y_H_i');
 		$name_research = array();

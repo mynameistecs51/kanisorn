@@ -130,13 +130,17 @@ class Welcome extends CI_Controller {
 
 		if($_FILES['file_doc'] != ""){
 			$upload_paper = $this->Model_main->insert_documentResearch('file_doc',$_FILES['file_doc'] );
-			$uploadPicture = $this->Model_main->insert_pictureResearch('files_pic',$_FILES['files_pic']);
+			
 			//$data = array('file_doc' => implode(',',$upload_paper));
-			print_r($upload_paper); echo "<br/>";
-			print_r($uploadPicture);
+			//print_r($upload_paper); echo "<br/>";
+			//print_r($uploadPicture);
 
-		}else{
-			echo "ON FILE";
+		}
+		// else{
+		// 	echo "ON FILE";
+		// }
+		if($_FILES['files_pic'] !=''){
+			$uploadPicture = $this->Model_main->insert_pictureResearch('files_pic',$_FILES['files_pic']);
 		}
 
 
