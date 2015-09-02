@@ -150,59 +150,42 @@ class Model_main extends CI_model{
 		return $get_tableTeacher;
 	}
 
-	function insert_pictureResearch($filed , $file){  		//upload multi file picture  // require filed name & files name
+	function insert_Research($filed , $file){  		//upload multi file picture  // require filed name & files name
 
 		$date = date("d_m_y_H_i");
 		$name_array = array();
 		$count = count($_FILES[$filed]['name']);
-		
-		foreach($_FILES as $key => $value){
-			for($s=0; $s < $count; $s++) {	
 
-				$_FILES[$filed]['name'] = $date.substr($value['name'][$s],-4);
+		foreach($_FILES as $key => $value){
+			for($s=0; $s < $count; $s++) {
+
+				$_FILES[$filed]['name'] = $date.substr($value['name'][$s],-5);
 				$_FILES[$filed]['type']    = $value['type'][$s];
 				$_FILES[$filed]['tmp_name'] = $value['tmp_name'][$s];
 				$_FILES[$filed]['error']       = $value['error'][$s];
 				$_FILES[$filed]['size']    = $value['size'][$s];
-				$config['upload_path'] = './files_upload/file_picture/';
-				//$config['allowed_types'] = 'gif|jpg|png';
-				$config['allowed_types'] = '*';
+				$config['upload_path'] = './files_upload/file_research/';
+				$config['allowed_types'] = 'gif|jpg|png|doc|docx|pdf|ppt|pptx';
 				$this->load->library('upload', $config);
 				$this->upload->do_upload($filed);
 				$data = $this->upload->data();
 				$name_array[] = $data['file_name'];
 			}
 		}
-		$names_picture= implode(',', $name_array);
+		$names_research = implode(',', $name_array);
 		/*
 		 $this->load->database();
 		$db_data = array('id'=> NULL,
 		'name'=> $names);
 		$this->db->insert('testtable',$db_data);
 		*/
-		return $name_array;
-	}
-	function insert_documentResearch($filed,$file){  		//upload multi file picture  // require filed name & files name
-		$date = date('d_m_y_H_i');
-		$name_research = array();
-		$config['upload_path'] = './files_upload/file_research/';
-		$config['allowed_types'] = 'doc|docx|pdf|ppt|pttx|';
-		$config['file_name'] = $date.'.'.substr($_FILES[$filed]['name'],-4);
-
-		// $name_research = $config['file_name'];
-		$this->load->library('upload', $config);
-
-		if ( ! $this->upload->do_upload($filed)){
-			$error = array('error' => $this->upload->display_errors());
-			return $error;
-		}
-		else{
-			$data = $this->upload->data();
-			$name_research[] = $data['file_name'];
-			return $name_research;
-		}
+		return $names_research;
 	}
 
+	function get_research(){
+		$research = $this->db->get('research');
+		return $research;
+	}
 
 }
 

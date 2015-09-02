@@ -7,15 +7,80 @@
 	</div>
 	<hr/>
 	<!-- show data reseacrh -->
-	<ul class="nav nav-tabs " role="tablist">
-		<li role="presentation" class="active"><a href="#national" aria-controls="national" role="tab" data-toggle="tab">National</a></li>
-		<li role="presentation"><a href="#international" aria-controls="international" role="tab" data-toggle="tab">International</a></li>
-	</ul>
-
-	<!-- Tab panes  show contant -->
-	<div class="tab-content">
-		<div role="tabpanel" class="tab-pane active" id="national">...</div>
-		<div role="tabpanel" class="tab-pane" id="international">...</div>
+	<!-- show data research -->
+	<div class="panel with-nav-tabs panel-default">
+		<div class="panel-heading">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#tab1national" data-toggle="tab">National</a></li>
+				<li><a href="#tab2international" data-toggle="tab">Internation</a></li>
+			</ul>
+		</div>
+		<div class="panel-body">
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id="tab1national">
+					<div class="panel panel-success">
+						<div class="panel-heading">รายการ</div>
+						<div class="panel-body">
+							<div class="table-reponsive">
+								<table class="table table-striped table-bordered table-hover">
+									<thead >
+										<tr>
+											<th class="text-center col-md-1">ที่</th>
+											<th class="text-center col-md-9">วิจัย/โครงงาน</th>
+											<th class="text-center col-md-1">แก้ไข</th>
+											<th class="text-center col-md-1">ลบ</th>
+										</tr>
+									</thead>
+									<?php foreach ($this->db->where('res_type','national')->get('research')->result() as $research): ?>
+										<tr>
+											<td><?php echo count($research--);?></td>
+											<td>
+												<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
+											</td>
+											<td>edit</td>
+											<td>delete</td>
+										</tr>
+									<?php endforeach ?>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div> <!-- end show research national -->
+				<div class="tab-pane fade" id="tab2international">
+					<div class="panel panel-success">
+						<div class="panel-heading">รายการ</div>
+						<div class="panel-body">
+							<div class="table-reponsive">
+								<table class="table table-striped table-bordered table-hover">
+									<thead >
+										<tr>
+											<th class="text-center col-md-1">ที่</th>
+											<th class="text-center col-md-9">วิจัย/โครงงาน</th>
+											<th class="text-center col-md-1">แก้ไข</th>
+											<th class="text-center col-md-1">ลบ</th>
+										</tr>
+									</thead>
+									<?php foreach ($this->db->where('res_type','international')->get('research')->result() as $research): ?>
+										<tr>
+											<td><?php echo count($research--);?></td>
+											<td>
+											<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
+											</td>
+											<td>edit</td>
+											<td>delete</td>
+										</tr>
+									<?php endforeach ?>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div> <!-- end show research international -->
+			</div>
+		</div>
 	</div>
 	<hr>
 

@@ -117,42 +117,36 @@ class Welcome extends CI_Controller {
 			);
 		$this->load->view('admin/manage_research',$data);
 	}
-	function insert_research(){
-		echo "<pre>";
-		// if($_FILES['files_pic'] != ""){
-
-		// 	$uploadPicture = $this->Model_main->insert_pictureResearch('files_pic',$_FILES['files_pic']);
-
-		// 	print_r($uploadPicture);
-		// }else{
-		// 	echo "ON FILE ";
-		// }
-
-		if($_FILES['file_doc'] != ""){
-			$upload_paper = $this->Model_main->insert_documentResearch('file_doc',$_FILES['file_doc'] );
-			
-			//$data = array('file_doc' => implode(',',$upload_paper));
-			//print_r($upload_paper); echo "<br/>";
-			//print_r($uploadPicture);
-
-		}
-		// else{
-		// 	echo "ON FILE";
-		// }
-		if($_FILES['files_pic'] !=''){
-			$uploadPicture = $this->Model_main->insert_pictureResearch('files_pic',$_FILES['files_pic']);
-		}
-
-
-	}
-
-
 
 	public function research(){
 		$data = array(
 			'active' => "research",
 			);
 		$this->load->view('research',$data);
+	}
+
+
+	function insert_research(){
+
+		if($_FILES['file_research'] !=''){
+			$upload_research = $this->Model_main->insert_Research('file_research',$_FILES['file_research']);
+			$name ="";
+			// foreach ($upload_research as $key => $value) {
+			$a = explode(',',$upload_research);
+			for($i = 1 ; $i < count($a) ; $i++){
+				$name .= $a[$i].',';
+			}
+			$insert_research = array(
+				'res_name' => $this->input->post('input_docName'),
+				'res_file' => $a[0],
+				'res_pict' => substr($name,0,-1),
+				'res_detail' => $this->input->post('input_docDetail'),
+				'res_type' => $this->input->post('research_type'),
+				);
+			$this->db->insert('research',$insert_research);
+		}
+		$this->mngResearch();
+
 	}
 
 	public function table_taecher(){
@@ -179,9 +173,6 @@ class Welcome extends CI_Controller {
 
 	public function download($file_name){		// download file project
 
-		// $data = file_get_contents("images/file_project_doc/".$file_name); // Read the file's contents
-		// $name = $file_name;
-		// echo force_download($name,$data);
 		$data = file_get_contents('./files_upload/file_document/'.$file_name);
 		$name = $file_name;
 		echo force_download($name,$data);
