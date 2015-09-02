@@ -7,7 +7,6 @@
 	</div>
 	<hr/>
 	<!-- show data reseacrh -->
-	<!-- show data research -->
 	<div class="panel with-nav-tabs panel-default">
 		<div class="panel-heading">
 			<ul class="nav nav-tabs">
@@ -66,7 +65,7 @@
 										<tr>
 											<td><?php echo count($research--);?></td>
 											<td>
-											<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
+												<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
 											</td>
 											<td>edit</td>
 											<td>delete</td>
