@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.3.11
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Aug 25, 2015 at 10:29 AM
--- Server version: 5.6.21
--- PHP Version: 5.5.19
+-- Host: 127.0.0.1
+-- Generation Time: Sep 03, 2015 at 11:11 AM
+-- Server version: 5.6.24
+-- PHP Version: 5.5.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -27,18 +27,19 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `file_document` (
-`file_docId` int(11) NOT NULL,
+  `file_docId` int(11) NOT NULL,
   `file_subName` text NOT NULL,
   `file_docPath` text NOT NULL,
   `file_docDetail` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `file_document`
 --
 
 INSERT INTO `file_document` (`file_docId`, `file_subName`, `file_docPath`, `file_docDetail`) VALUES
-(0, 'test update', '17_08_15_16_48_11document.pdf', 'ทดสอบการอัพเดท');
+(0, 'test update', '17_08_15_16_48_11document.pdf', 'ทดสอบการอัพเดท'),
+(3, 'dd', '28_08_15_14_13_452.png', 'dd');
 
 -- --------------------------------------------------------
 
@@ -47,12 +48,20 @@ INSERT INTO `file_document` (`file_docId`, `file_subName`, `file_docPath`, `file
 --
 
 CREATE TABLE IF NOT EXISTS `research` (
-`res_id` int(11) NOT NULL,
+  `res_id` int(11) NOT NULL,
   `res_name` text NOT NULL,
   `res_file` text NOT NULL,
   `res_pict` text NOT NULL,
-  `res_detail` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `res_detail` text NOT NULL,
+  `res_type` enum('national','international') NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `research`
+--
+
+INSERT INTO `research` (`res_id`, `res_name`, `res_file`, `res_pict`, `res_detail`, `res_type`) VALUES
+(7, 'test', '03_09_15_10_31.docx', '03_09_15_10_31_.png,03_09_15_10_31_1.png', 'test', 'international');
 
 -- --------------------------------------------------------
 
@@ -79,7 +88,7 @@ INSERT INTO `table_teacher` (`table_id`, `table_name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `university` (
-`uni_id` int(11) NOT NULL,
+  `uni_id` int(11) NOT NULL,
   `uni_data` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
@@ -100,25 +109,25 @@ INSERT INTO `university` (`uni_id`, `uni_data`) VALUES
 -- Indexes for table `file_document`
 --
 ALTER TABLE `file_document`
- ADD PRIMARY KEY (`file_docId`);
+  ADD PRIMARY KEY (`file_docId`);
 
 --
 -- Indexes for table `research`
 --
 ALTER TABLE `research`
- ADD PRIMARY KEY (`res_id`);
+  ADD PRIMARY KEY (`res_id`);
 
 --
 -- Indexes for table `table_teacher`
 --
 ALTER TABLE `table_teacher`
- ADD PRIMARY KEY (`table_id`);
+  ADD PRIMARY KEY (`table_id`);
 
 --
 -- Indexes for table `university`
 --
 ALTER TABLE `university`
- ADD PRIMARY KEY (`uni_id`);
+  ADD PRIMARY KEY (`uni_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -128,17 +137,17 @@ ALTER TABLE `university`
 -- AUTO_INCREMENT for table `file_document`
 --
 ALTER TABLE `file_document`
-MODIFY `file_docId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `file_docId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `research`
 --
 ALTER TABLE `research`
-MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
-MODIFY `uni_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `uni_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

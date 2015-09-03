@@ -89,7 +89,7 @@
 												<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
 											</td>
 											<td>edit</td>
-											<td>delete</td>
+											<td><?php echo anchor('Welcome/del_research/'.$research->res_name, 'ลบ');?></td>
 										</tr>
 									<?php endforeach ?>
 									<tbody>
@@ -117,10 +117,10 @@
 										<tr>
 											<td><?php echo count($research--);?></td>
 											<td>
-											<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
+												<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
 											</td>
 											<td>edit</td>
-											<td>delete</td>
+											<td><?php echo anchor('Welcome/del_research/'.$research->res_name, 'ลบ');?></td>
 										</tr>
 									<?php endforeach ?>
 									<tbody>

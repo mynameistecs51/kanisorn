@@ -130,7 +130,7 @@ class Welcome extends CI_Controller {
 
 	function insert_research(){
 
-		if($_FILES['file_research'] !=''){
+		if($_FILES  != null){
 			$upload_research = $this->Model_main->insert_Research('file_research',$_FILES['file_research']);
 			$name ="";
 			// foreach ($upload_research as $key => $value) {
@@ -146,9 +146,20 @@ class Welcome extends CI_Controller {
 				'res_type' => $this->input->post('research_type'),
 				);
 			$this->db->insert('research',$insert_research);
+
 		}
 		$this->mngResearch();
 
+	}
+
+	public function del_research($value=''){
+		if(!$value){
+			redirect('Welcome/mngResearch','refresh');
+			return false;
+		}else{
+			$this->Model_main->delete_research($value);
+			redirect('Welcome/mngResearch','refresh');
+		}
 	}
 
 	public function table_taecher(){

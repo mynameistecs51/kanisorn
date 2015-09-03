@@ -160,7 +160,7 @@ class Model_main extends CI_model{
 		foreach($_FILES as $key => $value){
 			for($s=0; $s < $count; $s++) {
 
-				$_FILES[$filed]['name'] = $date.substr($value['name'][$s],-5);
+				$_FILES[$filed]['name'] = $date.'.'.substr($value['name'][$s],-4);
 				$_FILES[$filed]['type']    = $value['type'][$s];
 				$_FILES[$filed]['tmp_name'] = $value['tmp_name'][$s];
 				$_FILES[$filed]['error']       = $value['error'][$s];
@@ -186,6 +186,25 @@ class Model_main extends CI_model{
 	function get_research(){
 		$research = $this->db->get('research');
 		return $research;
+	}
+
+	function delete_research($value){
+		$this->db->where('res_name',$value);
+		$del_research = $this->db->get('research')->result();
+
+		foreach ($del_research as $row_research) {
+
+			$file_pic = explode(',',$row_research->res_pict);
+
+			for($i=0; $i < count($file_pic); $i++){
+				unlink('./files_upload/file_research/'.$file_pic[$i]);	//delete file pic
+				//echo $i;
+			}
+			unlink('./files_upload/file_research/'.$row_research->res_file);	//delete file
+		}
+		$this->db->where('res_name',$value);
+		$this->db->delete('research');
+		return TRUE;
 	}
 
 }
