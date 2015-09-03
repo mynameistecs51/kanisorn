@@ -139,7 +139,7 @@ class Welcome extends CI_Controller {
 				$name .= $a[$i].',';
 			}
 			$insert_research = array(
-				'res_name' => $this->input->post('input_docName'),
+				'res_name' => $this->input->post('input_resName'),
 				'res_file' => $a[0],
 				'res_pict' => substr($name,0,-1),
 				'res_detail' => $this->input->post('input_docDetail'),
@@ -150,6 +150,18 @@ class Welcome extends CI_Controller {
 		}
 		$this->mngResearch();
 
+	}
+
+	public function update_research()
+	{
+		$update_research = array(
+			'res_name' => $this->input->post('input_resName'),
+			//'res_file' => $a[0],
+			//'res_pict' => substr($name,0,-1),
+			'res_detail' => $this->input->post('input_docDetail'),
+			'res_type' => $this->input->post('research_type'),
+			);
+		print_r($update_research);
 	}
 
 	public function del_research($value=''){
