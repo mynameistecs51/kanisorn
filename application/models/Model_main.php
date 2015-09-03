@@ -150,40 +150,7 @@ class Model_main extends CI_model{
 		return $get_tableTeacher;
 	}
 
-	function insert_pictureResearch(){
-		$config['upload_path'] = './files_upload/file_picture/';
-		$config['allowed_types'] = "gif|jpg|png|pdf|dwg";
-		//$config['encrypt_name'] = true;
-		$this->load->library('upload', $config);
-		$count = count($_FILES['files_pic']['error']);
-		for ($i = 0; $i < $count; $i++) {
-			$udata = null;
-			$pseudo_field_name = '_psuedo_'. 'files_pic' .'_'. $i;
-			$_FILES[$pseudo_field_name] = array(
-				'name' => $_FILES['files_pic']['name'][$i],
-				'size' => $_FILES['files_pic']['size'][$i],
-				'type' => $_FILES['files_pic']['type'][$i],
-				'tmp_name' => $_FILES['files_pic']['tmp_name'][$i],
-				'error' => $_FILES['files_pic']['error'][$i]
-				);
-			if ( ! $this->upload->do_upload($pseudo_field_name) ) {
-				$error = $this->upload->display_errors();
-				print_r($error);
-			} else {
-				$udata = $this->upload->data();
-				$success[$i] = $udata['file_name'];
-				$uploadedfile[$i]['name'] = $this->config->item("web_form_attach_path").$success[$i];
-				$uploadedfile[$i]['uploadname'] = $_FILES['files_pic']['name'][$i];
-			}
-        }// end loop upload
-        // loop display, insert, update file name
-        if ( isset($uploadedfile) && is_array($uploadedfile) ) {
-        	foreach ( $uploadedfile as $key => $item ) {
-        		echo $item['uploadname']."<br />\n";
-        	}
-        }
-     }
-	/*function insert_pictureResearch($filed , $file){  		//upload multi file picture  // require filed name & files name
+	function insert_Research($filed , $file){  		//upload multi file picture  // require filed name & files name
 
 		$date = date("d_m_y_H_i");
 		$name_array = array();
@@ -192,50 +159,33 @@ class Model_main extends CI_model{
 		foreach($_FILES as $key => $value){
 			for($s=0; $s < $count; $s++) {
 
-				$_FILES['files_pic']['name'] = $date.substr($value['name'][$s],-4);
-				$_FILES['files_pic']['type']    = $value['type'][$s];
-				$_FILES['files_pic']['tmp_name'] = $value['tmp_name'][$s];
-				$_FILES['files_pic']['error']       = $value['error'][$s];
-				$_FILES['files_pic']['size']    = $value['size'][$s];
-				$config['upload_path'] = './files_upload/file_picture/';
-				//$config['allowed_types'] = 'gif|jpg|png';
-				$config['allowed_types'] = '*';
+				$_FILES[$filed]['name'] = $date.substr($value['name'][$s],-5);
+				$_FILES[$filed]['type']    = $value['type'][$s];
+				$_FILES[$filed]['tmp_name'] = $value['tmp_name'][$s];
+				$_FILES[$filed]['error']       = $value['error'][$s];
+				$_FILES[$filed]['size']    = $value['size'][$s];
+				$config['upload_path'] = './files_upload/file_research/';
+				$config['allowed_types'] = 'gif|jpg|png|doc|docx|pdf|ppt|pptx';
 				$this->load->library('upload', $config);
 				$this->upload->do_upload($filed);
 				$data = $this->upload->data();
 				$name_array[] = $data['file_name'];
 			}
 		}
-		$names_picture= implode(',', $name_array);
+		$names_research = implode(',', $name_array);
 		/*
 		 $this->load->database();
 		$db_data = array('id'=> NULL,
 		'name'=> $names);
 		$this->db->insert('testtable',$db_data);
-
-		return $name_array;
-	}*/
-	function insert_documentResearch($filed,$file){  		//upload multi file picture  // require filed name & files name
-		$date = date('d_m_y_H_i');
-		$name_research = array();
-		$config['upload_path'] = './files_upload/file_research/';
-		$config['allowed_types'] = 'doc|docx|pdf|ppt|pttx|';
-		$config['file_name'] = $date.'.'.substr($_FILES[$filed]['name'],-4);
-
-		// $name_research = $config['file_name'];
-		$this->load->library('upload', $config);
-
-		if ( ! $this->upload->do_upload($filed)){
-			$error = array('error' => $this->upload->display_errors());
-			return $error;
-		}
-		else{
-			$data = $this->upload->data();
-			$name_research[] = $data['file_name'];
-			return $name_research;
-		}
+		*/
+		return $names_research;
 	}
 
+	function get_research(){
+		$research = $this->db->get('research');
+		return $research;
+	}
 
 }
 

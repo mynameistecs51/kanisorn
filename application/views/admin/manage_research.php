@@ -17,7 +17,7 @@
 
 				<label for="file_doc" class="col-sm-2 control-label" >เพิ่มไฟล์ .pdf</label>
 				<div class="col-sm-4  ">
-					<input type="file" id="file_doc" class="form-control" name="file_doc" size="20" />
+					<input type="file" id="file_doc" class="form-control" name="file_research[0]" size="20" />
 					<div class="progress">
 						<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
 							<span class="sr-only">Loading %</span>
@@ -28,7 +28,7 @@
 			<div class="form-group col-sm-12">
 				<label for="input_docDetail" class="col-md-2 control-label">ภาพกิจกรรม</label>
 				<div class="col-sm-10  "  >
-					<input type="file" name="files_pic[]" class="form-control"   id="files_pic[]" multiple=""   />
+					<input type="file" name="file_research[]" class="form-control"   id="files_pic[]" multiple=""   />
 					<output id="list"></output>
 					<label class="text-helper" style="color:red">**เพิ่มไม่เกิน 4 ภาพ**</label>
 					<div class="dz-default dz-message"></div>
@@ -57,16 +57,80 @@
 			<?php echo form_close();?>
 		</div>
 	</div>
-	<!-- show data reseacrh -->
-	<ul class="nav nav-tabs " role="tablist">
-		<li role="presentation" class="active"><a href="#national" aria-controls="national" role="tab" data-toggle="tab">National</a></li>
-		<li role="presentation"><a href="#international" aria-controls="international" role="tab" data-toggle="tab">International</a></li>
-	</ul>
-
-	<!-- Tab panes  show contant -->
-	<div class="tab-content">
-		<div role="tabpanel" class="tab-pane active" id="national">...</div>
-		<div role="tabpanel" class="tab-pane" id="international">...</div>
+	<!-- show data research -->
+	<div class="panel with-nav-tabs panel-default">
+		<div class="panel-heading">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#tab1national" data-toggle="tab">National</a></li>
+				<li><a href="#tab2international" data-toggle="tab">Internation</a></li>
+			</ul>
+		</div>
+		<div class="panel-body">
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id="tab1national">
+					<div class="panel panel-success">
+						<div class="panel-heading">รายการ</div>
+						<div class="panel-body">
+							<div class="table-reponsive">
+								<table class="table table-striped table-bordered table-hover">
+									<thead >
+										<tr>
+											<th class="text-center col-md-1">ที่</th>
+											<th class="text-center col-md-9">วิจัย/โครงงาน</th>
+											<th class="text-center col-md-1">แก้ไข</th>
+											<th class="text-center col-md-1">ลบ</th>
+										</tr>
+									</thead>
+									<?php foreach ($this->db->where('res_type','national')->get('research')->result() as $research): ?>
+										<tr>
+											<td><?php echo count($inter_research--);?></td>
+											<td>
+												<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
+											</td>
+											<td>edit</td>
+											<td>delete</td>
+										</tr>
+									<?php endforeach ?>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div> <!-- end show research national -->
+				<div class="tab-pane fade" id="tab2international">
+					<div class="panel panel-success">
+						<div class="panel-heading">รายการ</div>
+						<div class="panel-body">
+							<div class="table-reponsive">
+								<table class="table table-striped table-bordered table-hover">
+									<thead >
+										<tr>
+											<th class="text-center col-md-1">ที่</th>
+											<th class="text-center col-md-9">วิจัย/โครงงาน</th>
+											<th class="text-center col-md-1">แก้ไข</th>
+											<th class="text-center col-md-1">ลบ</th>
+										</tr>
+									</thead>
+									<?php foreach ($this->db->where('res_type','international')->get('research')->result() as $research): ?>
+										<tr>
+											<td><?php echo count($inter_research--);?></td>
+											<td>
+											<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
+											</td>
+											<td>edit</td>
+											<td>delete</td>
+										</tr>
+									<?php endforeach ?>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div> <!-- end show research international -->
+			</div>
+		</div>
 	</div>
 	<hr>
 
