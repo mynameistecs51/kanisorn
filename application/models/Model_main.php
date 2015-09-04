@@ -189,7 +189,7 @@ class Model_main extends CI_model{
 	}
 
 	function delete_research($value){
-		$this->db->where('res_name',$value);
+		$this->db->where('res_id',$value);
 		$del_research = $this->db->get('research')->result();
 
 		foreach ($del_research as $row_research) {
@@ -197,15 +197,17 @@ class Model_main extends CI_model{
 			$file_pic = explode(',',$row_research->res_pict);
 
 			for($i=0; $i < count($file_pic); $i++){
-				unlink('./files_upload/file_research/'.$file_pic[$i]);	//delete file pic
+				@unlink('./files_upload/file_research/'.$file_pic[$i]);	//delete file pic
 				//echo $i;
 			}
-			unlink('./files_upload/file_research/'.$row_research->res_file);	//delete file
+				@unlink('./files_upload/file_research/'.$row_research->res_file);	//delete file
+
 		}
-		$this->db->where('res_name',$value);
-		$this->db->delete('research');
+		$this->db->where('res_id',$value);
+		$del = $this->db->delete('research');
 		return TRUE;
 	}
+
 
 }
 

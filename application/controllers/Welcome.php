@@ -148,19 +148,23 @@ class Welcome extends CI_Controller {
 			$this->db->insert('research',$insert_research);
 
 		}
-		$this->mngResearch();
+		redirect('Welcome/mngResearch','refresh');
 
 	}
 
-	public function update_research()
-	{
-		$update_research = array(
-			'res_name' => $this->input->post('input_resName'),
-			//'res_file' => $a[0],
-			//'res_pict' => substr($name,0,-1),
-			'res_detail' => $this->input->post('input_docDetail'),
-			'res_type' => $this->input->post('research_type'),
-			);
+	public function update_research(){
+		$update_research =array();
+		if( $_FILES['res_file']['name'][0] != null){
+			//$name_file = $this->Model_main->update_research();
+			$update_research = array(
+				'res_id' => $this->input->post('res_id'),
+				'res_name' => $this->input->post('input_resName'),
+				'res_file' => $_FILES['res_file']['name'][0],
+			// 'res_pict' => substr($name,0,-1),
+				'res_detail' => $this->input->post('input_docDetail'),
+				'res_type' => $this->input->post('research_type'),
+				);
+		}
 		print_r($update_research);
 	}
 
