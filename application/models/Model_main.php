@@ -202,13 +202,76 @@ class Model_main extends CI_model{
 			}
 				@unlink('./files_upload/file_research/'.$row_research->res_file);	//delete file
 
+			}
+			$this->db->where('res_id',$value);
+			$del = $this->db->delete('research');
+			return TRUE;
 		}
-		$this->db->where('res_id',$value);
-		$del = $this->db->delete('research');
-		return TRUE;
+
+		public function update_research($value='')
+		{
+			$id = "";
+			foreach ($this->db->where('res_id',$this->input->post('res_id'))->get('research')->result()as  $row_research) {
+
+				$update_research =array();
+
+				if( $_FILES['res_file']['name'][0] &&  $_FILES['res_file']['name'][1] != ""){
+
+					$for = explode(',',$row_research->res_pict);	//delete file agen
+					for($n = 0 ; $n < count($for) ; $n++){
+
+						unlink('./files_upload/file_research/'.$for[$n]);
+					}
+					unlink('./files_upload/file_research/'.$row_research->res_file);
+
+					$update = $this->insert_Research('res_file',$_FILES['res_file']);
+					$name ="";
+					$a = explode(',',$update);
+					for($i = 1 ; $i < count($a) ; $i++){
+
+						$name .= $a[$i].',';
+					}
+
+					$update_research = array(
+						'res_id' => $this->input->post('res_id'),
+						'res_name' => $this->input->post('input_resName'),
+						'res_file' => $a[0],
+						'res_pict' => substr($name,0,-1),
+						'res_detail' => $this->input->post('input_docDetail'),
+						'res_type' => $this->input->post('research_type'),
+						);
+					//unset($update_research['res_pict'][0]);
+				}elseif ( $_FILES['res_file']['name'][0]  != "") {
+					unlink('./files_upload/file_research/'.$row_research->res_file);	//delete file agen
+					$update_file = $this->insert_Research('res_file',$_FILES['res_file']);
+					$b = explode(',',$update_file);
+					$update_research = array(
+						//'res_id' => $this->input->post('res_id'),
+						'res_name' => $this->input->post('input_resName'),
+						'res_file' => $b[0],	//upload new file
+				//'res_pict' => $_FILES['res_file']['name'],
+						'res_detail' => $this->input->post('input_docDetail'),
+						'res_type' => $this->input->post('research_type'),
+						);
+			//unset($update_research['res_file']['name'][1]);
+				}elseif ( $_FILES['res_file']['name'] != ""){
+					$update_research = array(
+						'res_id' => $this->input->post('res_id'),
+						'res_name' => $this->input->post('input_resName'),
+				//'res_file' => $_FILES['res_file']['name'][0],
+						'res_pict' => $_FILES['res_file']['name'],
+						'res_detail' => $this->input->post('input_docDetail'),
+						'res_type' => $this->input->post('research_type'),
+						);
+					unset($update_research['res_pict'][0]);
+				}
+
+			}
+			$this->db->where('res_id',$row_research->res_id)->update('research',$update_research);
+			print_r($update_research);
+		}
+
+
 	}
 
-
-}
-
-?>
+	?>
