@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 03, 2015 at 11:11 AM
+-- Generation Time: Sep 06, 2015 at 06:23 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.5.24
 
@@ -54,14 +54,16 @@ CREATE TABLE IF NOT EXISTS `research` (
   `res_pict` text NOT NULL,
   `res_detail` text NOT NULL,
   `res_type` enum('national','international') NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `research`
 --
 
 INSERT INTO `research` (`res_id`, `res_name`, `res_file`, `res_pict`, `res_detail`, `res_type`) VALUES
-(7, 'test', '03_09_15_10_31.docx', '03_09_15_10_31_.png,03_09_15_10_31_1.png', 'test', 'international');
+(14, 'national', '06_09_15_17_37.docx', '06_09_15_17_37_.png,06_09_15_17_37_1.png', 'national', 'national'),
+(15, 'international', '06_09_15_17_371.docx', '06_09_15_17_37_2.png,06_09_15_17_37_3.png', 'international', 'international'),
+(23, 'national test', '06_09_15_18_05.docx', '06_09_15_18_05_.png,06_09_15_18_05_1.png', 'national test', 'national');
 
 -- --------------------------------------------------------
 
@@ -142,7 +144,7 @@ ALTER TABLE `file_document`
 -- AUTO_INCREMENT for table `research`
 --
 ALTER TABLE `research`
-  MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `university`
 --
