@@ -30,17 +30,20 @@
 											<th class="text-center col-md-1">ลบ</th>
 										</tr>
 									</thead>
-									<?php foreach ($this->db->where('res_type','national')->get('research')->result() as $research): ?>
-										<tr>
-											<td><?php echo count($research--);?></td>
-											<td>
-												<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
-											</td>
-											<td>edit</td>
-											<td>delete</td>
-										</tr>
-									<?php endforeach ?>
 									<tbody>
+										<?php $no = count($this->db->where('res_type','national')->get('research'));?>
+										<?php foreach ($this->db->where('res_type','national')->order_by('res_id','ASC')->get('research')->result() as $research): ?>
+
+											<tr>
+												<td><?php echo $no ++ ;?></td>
+												<td>
+													<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
+												</td>
+												<td>edit</td>
+												<td>delete</td>
+											</tr>
+										<?php endforeach ?>
+
 									</tbody>
 								</table>
 							</div>
@@ -61,17 +64,20 @@
 											<th class="text-center col-md-1">ลบ</th>
 										</tr>
 									</thead>
-									<?php foreach ($this->db->where('res_type','international')->get('research')->result() as $research): ?>
-										<tr>
-											<td><?php echo count($research--);?></td>
-											<td>
-												<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
-											</td>
-											<td>edit</td>
-											<td>delete</td>
-										</tr>
-									<?php endforeach ?>
 									<tbody>
+										<?php $no = count($this->db->where('res_type','international')->get('research'));?>
+										<?php foreach ($this->db->where('res_type','international')->order_by('res_id','ASC')->get('research')->result() as $research): ?>
+
+											<tr>
+											<td><?php echo $no++;?></td>
+												<td>
+													<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
+												</td>
+												<td>edit</td>
+												<td>delete</td>
+											</tr>
+										<?php endforeach ?>
+
 									</tbody>
 								</table>
 							</div>

@@ -79,11 +79,11 @@
 										</tr>
 									</thead>
 									<tbody>
-										<?php $no = count($this->db->where('res_type','national')->get('research')->result());?>
+										<?php $no = count($this->db->where('res_type','national')->get('research'));?>
 										<?php foreach ($this->db->where('res_type','national')->order_by('res_id','DESC')->get('research')->result() as $research): ?>
 
 											<tr>
-												<td><?php echo $no -- ;?></td>
+												<td><?php echo $no++;?></td>
 												<td >
 													<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
 												</td>
@@ -173,81 +173,83 @@
 												<th class="text-center col-md-1">ลบ</th>
 											</tr>
 										</thead>
-										<?php $no = count( $this->db->where('res_type','international')->get('research'));?>
-										<?php foreach ( $this->db->where('res_type','international')->order_by('res_id','DESC')->get('research')->result() as $research): ?>
+
+										<tbody>
+											<?php $no = count($this->db->where('res_type','international')->get('research'));?>
+										<?php foreach ($this->db->where('res_type','international')->order_by('res_id','ASC')->get('research')->result() as $research): ?>
+
 											<tr>
-												<td><?php echo $no-- ;?></td>
-												<td >
-													<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
-												</td>
-												<td class="text-center">
-													<?php echo anchor('#','แก้ไข','data-toggle="modal" data-target="#myModal'.$research->res_id.'"');?>
-												</td>
-												<td class="text-center">
-													<?php echo anchor('Welcome/del_research/'.$research->res_id, 'ลบ');?>
-												</td>
-											</tr>
+											<td><?php echo $no++;?></td>
+													<td >
+														<?php echo "<b>".$research->res_name."</b><br/>". substr($research->res_detail,0,100);?>
+													</td>
+													<td class="text-center">
+														<?php echo anchor('#','แก้ไข','data-toggle="modal" data-target="#myModal'.$research->res_id.'"');?>
+													</td>
+													<td class="text-center">
+														<?php echo anchor('Welcome/del_research/'.$research->res_id, 'ลบ');?>
+													</td>
+												</tr>
 
-											<!-- Modal  form upload -->
-											<div class="modal fade" id="myModal<?php echo $research->res_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-												<div class="modal-dialog modal-lg" role="document">
-													<div class="modal-content">
-														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-															<h4 class="modal-title" id="myModalLabel">อัพเดท งานวิจัย</h4>
+												<!-- Modal  form upload -->
+												<div class="modal fade" id="myModal<?php echo $research->res_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+													<div class="modal-dialog modal-lg" role="document">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+																<h4 class="modal-title" id="myModalLabel">อัพเดท งานวิจัย</h4>
+															</div>
+															<div class="modal-body row">													<?php echo form_open_multipart('Welcome/update_research',' class="form-horizontal" role="form" ');?>
+																<input type="hidden" id="res_id" name="res_id"  value="<?php echo $research->res_id;?>" />
+																<div class="form-group col-sm-12">
+																	<label for="input_resName" class="col-md-2 control-label text-right">ชื่องานวิจัย </label>
+																	<div class="col-sm-4">
+																		<input type="text" class="form-control" id="input_resName" name="input_resName" value="<?php echo $research->res_name; ?>">
+																		<br/>
+																	</div>
+
+																	<label for="res_file" class="col-sm-2 control-label text-right" >เพิ่มไฟล์</label>
+																	<div class="col-sm-4 ">
+																		<input type="file" id="res_file" class="form-control" name="res_file[0]" size="20" />
+																	</div>
+																</div>
+																<div class="form-group col-sm-12">
+																	<label for="file_research" class="col-md-2 control-label text-right">ภาพกิจกรรม</label>
+																	<div class="col-sm-10  "  >
+																		<input type="file" name="res_pict[]" class="form-control"   id="files_pic[]" multiple=""   />
+																		<output id="list"></output>
+																		<label class="text-helper" style="color:red">**เพิ่มไม่เกิน 4 ภาพ**</label>
+																		<div class="dz-default dz-message"></div>
+																	</div>
+																</div>
+																<div class="form-group col-sm-12">
+																	<label for="input_docDetail" class="col-md-2 control-label text-right">รายละเอียดวิชา</label>
+																	<div class="col-sm-10">
+																		<textarea class="form-control" id="input_docDetail" name="input_docDetail" ><?php echo $research->res_detail;?></textarea>
+																		<label class="text-helper" style="color:red">**กรอกรายละเอียดพอสังเขป**</label>
+																	</div>
+																</div>
+
+																<div class="form-group col-sm-12">
+																	<label for="input_docDetail" class="col-md-2 control-label">ประเภทงานวิจัย</label>
+																	<div class="radio col-sm-10">
+																		<?php $a = ($research->res_type == 'national' ? 'checked' : '');?>
+																		<label><input type="radio" id='national' <?php  echo $a;?> name="research_type" value="national">Natinal </label>&nbsp;&nbsp;
+																		<?php $b = ($research->res_type == 'international' ? 'checked' : '');?>
+																		<label><input type="radio" id="international" name="research_type" <?php echo $b;?> value="international">Internation</label>
+																	</div>
+																</div>
+																<div class="form-group col-sm-12 ">
+																	<div class="pull-right">
+																		<button type="reset" class="btn btn-warning" >RESET</button>
+																		<button type="submit" class="btn btn-success" name="submit" value="submit">SAVE</button>
+																	</div>
+																</div>
+																<?php echo form_close();?>										<hr/>
+															</div>
 														</div>
-														<div class="modal-body row">													<?php echo form_open_multipart('Welcome/update_research',' class="form-horizontal" role="form" ');?>
-															<input type="hidden" id="res_id" name="res_id"  value="<?php echo $research->res_id;?>" />
-															<div class="form-group col-sm-12">
-																<label for="input_resName" class="col-md-2 control-label text-right">ชื่องานวิจัย </label>
-																<div class="col-sm-4">
-																	<input type="text" class="form-control" id="input_resName" name="input_resName" value="<?php echo $research->res_name; ?>">
-																	<br/>
-																</div>
-
-																<label for="res_file" class="col-sm-2 control-label text-right" >เพิ่มไฟล์</label>
-																<div class="col-sm-4 ">
-																	<input type="file" id="res_file" class="form-control" name="res_file[0]" size="20" />
-																</div>
-															</div>
-															<div class="form-group col-sm-12">
-																<label for="file_research" class="col-md-2 control-label text-right">ภาพกิจกรรม</label>
-																<div class="col-sm-10  "  >
-																	<input type="file" name="res_pict[]" class="form-control"   id="files_pic[]" multiple=""   />
-																	<output id="list"></output>
-																	<label class="text-helper" style="color:red">**เพิ่มไม่เกิน 4 ภาพ**</label>
-																	<div class="dz-default dz-message"></div>
-																</div>
-															</div>
-															<div class="form-group col-sm-12">
-																<label for="input_docDetail" class="col-md-2 control-label text-right">รายละเอียดวิชา</label>
-																<div class="col-sm-10">
-																	<textarea class="form-control" id="input_docDetail" name="input_docDetail" ><?php echo $research->res_detail;?></textarea>
-																	<label class="text-helper" style="color:red">**กรอกรายละเอียดพอสังเขป**</label>
-																</div>
-															</div>
-
-															<div class="form-group col-sm-12">
-																<label for="input_docDetail" class="col-md-2 control-label">ประเภทงานวิจัย</label>
-																<div class="radio col-sm-10">
-																	<?php $a = ($research->res_type == 'national' ? 'checked' : '');?>
-																	<label><input type="radio" id='national' <?php  echo $a;?> name="research_type" value="national">Natinal </label>&nbsp;&nbsp;
-																	<?php $b = ($research->res_type == 'international' ? 'checked' : '');?>
-																	<label><input type="radio" id="international" name="research_type" <?php echo $b;?> value="international">Internation</label>
-																</div>
-															</div>
-															<div class="form-group col-sm-12 ">
-																<div class="pull-right">
-																	<button type="reset" class="btn btn-warning" >RESET</button>
-																	<button type="submit" class="btn btn-success" name="submit" value="submit">SAVE</button>
-																</div>
-															</div>
-															<?php echo form_close();?>										<hr/>
-														</div>
-													</div>
-												</div><!-- end modal -->
-											<?php endforeach ?>
-											<tbody>
+													</div><!-- end modal -->
+												<?php endforeach ?>
 											</tbody>
 										</table>
 									</div>

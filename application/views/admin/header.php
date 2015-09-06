@@ -95,8 +95,8 @@
 					echo anchor('Welcome/mngDocument','<i class="fa fa-book"> จัดการเอกสารประกอบการสอน</i>','class="list-group-item '.$a.'"');
 					$a = ($active == 'research' ? 'active' : '');
 					echo anchor('Welcome/mngResearch','<i class="fa fa-newspaper-o"> จัดการงานวิจัย</i>','class="list-group-item '.$a.'"');
-					$a = ($active == 'table_taecher' ? 'active':'');
-					echo anchor('Welcome/table_taecher','<i class="fa fa-newspaper-o"> จัดการตารางสอน</i>','class="list-group-item '.$a.'"');
+					$a = ($active == 'taecher' ? 'active':'');
+					echo anchor('Welcome/mngTable','<i class="fa fa-newspaper-o"> จัดการตารางสอน</i>','class="list-group-item '.$a.'"');
 					$a = ($active == 'contact' ? 'active': '');
 					echo anchor('Welcome/contact','<i class="fa fa-commenting"> จัดการติดต่อ</i>','class="list-group-item '.$a.'"');
 					?>

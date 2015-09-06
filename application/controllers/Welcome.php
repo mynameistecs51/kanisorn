@@ -148,7 +148,7 @@ class Welcome extends CI_Controller {
 			$this->db->insert('research',$insert_research);
 
 		}
-		 redirect('Welcome/mngResearch','refresh');
+		redirect('Welcome/mngResearch','refresh');
 
 	}
 
@@ -167,11 +167,26 @@ class Welcome extends CI_Controller {
 		}
 	}
 
-	public function table_taecher(){
+	public function mngTable(){
 		$data = array(
-			'active' => 'table_taecher',
+			'active' => 'taecher',
 			);
 		$this->load->view('admin/mngTable',$data);
+	}
+
+	public function insert_table()
+	{
+		$this->form_validation->set_rules('num_trem','num_trem','required');
+
+
+		if( $this->form_validation->run() === FALSE ){
+			$this->mngTable();	//load function mngDocument()
+			return false;
+		}else{
+			$this->Model_main->upload_fileTable();		//upload document file --> function upload_fileDoc()
+			$this->mngTable();		//load function mngDocument()
+		}
+		redirect('Welcome/mngTable','refresh');
 	}
 
 	public function show_table(){

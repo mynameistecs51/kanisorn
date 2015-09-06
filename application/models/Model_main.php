@@ -51,12 +51,12 @@ class Model_main extends CI_model{
 		$file_name =  date('d_m_y_H_i_s');
 		$config['upload_path'] =  './files_upload/file_document';
 		// die(var_dump(is_dir($config['upload_path'])));
-		$config['allowed_types'] = 'doc|docx|pdf|jpg|jpeg|png|';
+		$config['allowed_types'] = 'doc|docx|pdf|ppt|pptx';
 		$config['max_size'] = '7000';	// 7mb
-		$config['file_name'] = $file_name.$_FILES['file_doc']['name'];		//fiel_name
+		$config['file_name'] = $file_name.'.'.substr($_FILES['file_doc']['name'],-4);		//file_name
 		$config['remove_spaces'] = TRUE;
 
-		$name_file = $config['file_name'] = $file_name.$_FILES['file_doc']['name'];		//fiel_name
+		$name_file = $config['file_name'] = $file_name.$_FILES['file_doc']['name'];		//file_name
 
 		$this->load->library("upload",$config);		//library upload
 		$this->upload->initialize($config);
@@ -89,15 +89,15 @@ class Model_main extends CI_model{
 		$config['upload_path'] =  './files_upload/file_document';
 		$config['allowed_types'] = 'doc|docx|pdf|jpg|jpeg|png|';
 		$config['max_size'] = '7000';		// 7mb
-		$config['file_name'] = $file_name.$_FILES['file_doc']['name'];		//fiel_name
-		$config['remove_spaces'] = TRUE;
+		$config['file_name'] = $file_name.'.'.substr($_FILES['file_doc']['name'],-4);		//file_name
+		//$config['remove_spaces'] = TRUE;
 
 		$this->load->library("upload",$config);		//library upload
 		$this->upload->initialize($config);
 		if($this->upload->do_upload('file_doc')){	//ถ้า upload ไม่มีปัญหา
 			$data_update = array(
 				'file_subName' => $this->input->post('input_docName'),
-				'file_docPath' => $file_name.$_FILES['file_doc']['name'],
+				'file_docPath' => $this->upload->data('file_name'),
 				'file_docDetail' => $this->input->post('input_docDetail'),
 				);
 			$this->db->where('file_docId',$file_docId);
@@ -149,6 +149,27 @@ class Model_main extends CI_model{
 	function get_tableTeacher(){
 		$get_tableTeacher = $this->db->get('table_teacher')->result();
 		return $get_tableTeacher;
+	}
+
+	function upload_fileTable()
+	{
+		$file_name =  date('d_m_y_H_i_s');
+		$config['upload_path'] =  './files_upload/file_picture';
+		$config['allowed_types'] = 'jpg|jpeg|png|';
+		$config['file_name'] = $file_name.'.'.substr($_FILES['file_table']['name'],-4);		//file_name
+		//$config['remove_spaces'] = TRUE;
+
+		$this->load->library("upload",$config);		//library upload
+		$this->upload->initialize($config);
+		if($this->upload->do_upload('file_table')){	//ถ้า upload ไม่มีปัญหา
+			$insert_table = array(
+				'table_trem' => $this->input->post('num_trem'),
+				'table_name' => $this->upload->data('file_name'),
+				);
+			$this->db->insert('table_teacher',$insert_table);
+		}else{
+			print_r($this->upload->display_errors());
+		}
 	}
 
 	function insert_Research($filed , $file){  		//upload multi file picture  // require filed name & files name
@@ -217,12 +238,12 @@ class Model_main extends CI_model{
 
 				if( $_FILES['res_file']['name'][0] &&  $_FILES['res_file']['name'][1] != ""){
 
-					$for = explode(',',$row_research->res_pict);	//delete file agen
+					$for = explode(',',$row_research->res_pict);	
 					for($n = 0 ; $n < count($for) ; $n++){
 
-						unlink('./files_upload/file_research/'.$for[$n]);
+						unlink('./files_upload/file_research/'.$for[$n]);	//delete picture  agen
 					}
-					unlink('./files_upload/file_research/'.$row_research->res_file);
+					unlink('./files_upload/file_research/'.$row_research->res_file); //delete file  
 
 					$update = $this->insert_Research('res_file',$_FILES['res_file']);
 					$name ="";
@@ -243,27 +264,39 @@ class Model_main extends CI_model{
 					//unset($update_research['res_pict'][0]);
 				}elseif ( $_FILES['res_file']['name'][0]  != "") {
 					unlink('./files_upload/file_research/'.$row_research->res_file);	//delete file agen
+
 					$update_file = $this->insert_Research('res_file',$_FILES['res_file']);
 					$b = explode(',',$update_file);
 					$update_research = array(
-						//'res_id' => $this->input->post('res_id'),
 						'res_name' => $this->input->post('input_resName'),
 						'res_file' => $b[0],	//upload new file
-				//'res_pict' => $_FILES['res_file']['name'],
 						'res_detail' => $this->input->post('input_docDetail'),
 						'res_type' => $this->input->post('research_type'),
 						);
-			//unset($update_research['res_file']['name'][1]);
-				}elseif ( $_FILES['res_file']['name'] != ""){
+				}elseif ( $_FILES['res_file']['name'][1] != ""){
+
+					$for = explode(',',$row_research->res_pict);	
+					for($n = 0 ; $n < count($for) ; $n++){
+
+						unlink('./files_upload/file_research/'.$for[$n]);	//delete picture  agen
+					}
+
+					$update = $this->insert_Research('res_file',$_FILES['res_file']);
+					$name ="";
+					$a = explode(',',$update);
+					for($i = 1 ; $i < count($a) ; $i++){
+
+						$name .= $a[$i].',';
+					}
+
 					$update_research = array(
 						'res_id' => $this->input->post('res_id'),
 						'res_name' => $this->input->post('input_resName'),
 				//'res_file' => $_FILES['res_file']['name'][0],
-						'res_pict' => $_FILES['res_file']['name'],
+						'res_pict' => substr($name,0,-1),
 						'res_detail' => $this->input->post('input_docDetail'),
 						'res_type' => $this->input->post('research_type'),
 						);
-					unset($update_research['res_pict'][0]);
 				}
 
 			}
