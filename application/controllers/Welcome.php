@@ -189,6 +189,20 @@ class Welcome extends CI_Controller {
 		redirect('Welcome/mngTable','refresh');
 	}
 
+	public function update_table()
+	{	$value = $this->input->post('value');
+		unlink('./files_upload/file_picture/'.$value);
+		$this->Model_main->update_table( $value );
+		redirect('Welcome/mngTable','refresh');
+	}
+
+	public function delete_table($value='')
+	{
+		unlink('./files_upload/file_picture/'.$value);
+		$this->db->where('table_name',$value)->delete('table_teacher');
+		redirect('Welcome/mngTable','refresh');
+	}
+
 	public function show_table(){
 		$data = array(
 			'active' => "table_taecher",

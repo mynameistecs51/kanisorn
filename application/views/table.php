@@ -10,10 +10,11 @@
 
 	<div class="row">
 		<div class="col-md-12">
-		<?php foreach ($table_taecher as $row_table) {
-			echo '<img class="col-md-12" src="'.base_url().'files_upload/'.$row_table->table_name.'"/>';
-		}
-		?>
+			<?php
+			foreach ($this->db->get('table_teacher')->result() as $row_table) {
+				echo '<img class="col-md-12" src="'.base_url().'files_upload/file_picture/'.$row_table->table_name.'"/>';
+			}
+			?>
 		</div>
 	</div>
 

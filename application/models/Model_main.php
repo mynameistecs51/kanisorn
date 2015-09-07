@@ -168,7 +168,28 @@ class Model_main extends CI_model{
 				);
 			$this->db->insert('table_teacher',$insert_table);
 		}else{
-			print_r($this->upload->display_errors());
+			return $this->upload->display_errors();
+		}
+	}
+
+	function update_table( $value ="")
+	{
+		$file_name =  date('d_m_y_H_i_s');
+		$config['upload_path'] =  './files_upload/file_picture';
+		$config['allowed_types'] = 'jpg|jpeg|png|';
+		$config['file_name'] = $file_name.'.'.substr($_FILES['file_table']['name'],-4);		//file_name
+		//$config['remove_spaces'] = TRUE;
+
+		$this->load->library("upload",$config);		//library upload
+		$this->upload->initialize($config);
+		if($this->upload->do_upload('file_table')){	//ถ้า upload ไม่มีปัญหา
+			$update_table = array(
+				'table_trem' => $this->input->post('num_trem'),
+				'table_name' => $this->upload->data('file_name'),
+				);
+			$this->db->where('table_name',$value)->update('table_teacher',$update_table);
+		}else{
+			return $this->upload->display_errors();
 		}
 	}
 
@@ -238,12 +259,12 @@ class Model_main extends CI_model{
 
 				if( $_FILES['res_file']['name'][0] &&  $_FILES['res_file']['name'][1] != ""){
 
-					$for = explode(',',$row_research->res_pict);	
+					$for = explode(',',$row_research->res_pict);
 					for($n = 0 ; $n < count($for) ; $n++){
 
 						unlink('./files_upload/file_research/'.$for[$n]);	//delete picture  agen
 					}
-					unlink('./files_upload/file_research/'.$row_research->res_file); //delete file  
+					unlink('./files_upload/file_research/'.$row_research->res_file); //delete file
 
 					$update = $this->insert_Research('res_file',$_FILES['res_file']);
 					$name ="";
@@ -275,7 +296,7 @@ class Model_main extends CI_model{
 						);
 				}elseif ( $_FILES['res_file']['name'][1] != ""){
 
-					$for = explode(',',$row_research->res_pict);	
+					$for = explode(',',$row_research->res_pict);
 					for($n = 0 ; $n < count($for) ; $n++){
 
 						unlink('./files_upload/file_research/'.$for[$n]);	//delete picture  agen
