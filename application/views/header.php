@@ -63,7 +63,19 @@
 						<a href="#">Contact</a>
 					</li>
 					<li>
-						<?php echo anchor('Welcome/management','admin');?>
+						<?php 
+						if(!$fb_data['me']){     
+							echo anchor($fb_data['loginUrl'],'<image src="'.base_url().'files_upload/fb_login.png"/>');
+						}  else  {
+							echo anchor('https://www.facebook.com/profile.php?id='.$fb_data['me']['name'],' <img src="https://graph.facebook.com/'.$fb_data['uid'].'/picture" alt="" class="pic" />');
+							echo "&nbsp;&nbsp;";
+							//echo "<br/>";
+							//echo $fb_data['me']['name']." "; 
+            						//echo anchor($fb_data['logoutUrl'],'logout');
+							echo anchor('Welcome/logout','logout','class="pull-right"');
+						} 
+						?>
+						<?php //echo anchor('Welcome/management','admin');?>
 					</li>
 				</ul>
 			</div>

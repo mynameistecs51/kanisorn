@@ -1,6 +1,5 @@
 
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php   defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
@@ -8,12 +7,16 @@ class Welcome extends CI_Controller {
 		parent::__construct();
 		date_default_timezone_set('Asia/Bangkok');
 		$this->load->model('Model_main','',TRUE);
+		$this->load->model('Login','',TRUE);
+
 	}
 
 	public function index(){
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
 		$data = array(
 			'active' => "history",	//select menu active
 			'get_university' => $this->Model_main->get_University(),
+			'fb_data' =>$fb_data,
 			);
 
 		$this->load->view('index',$data);
@@ -231,6 +234,11 @@ class Welcome extends CI_Controller {
 		// $data = file_get_contents(base_url().'files_upload/file_document/'.$file_name);
 		$name = $file_name;
 		echo $string = fopen(base_url().'files_upload/file_document/'.$name,'r');
+	}
+
+	public function logout()		
+	{
+		$this->Login->logout();
 	}
 
 }
