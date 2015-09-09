@@ -29,7 +29,7 @@
 		#name_head {
 			font-family: myFirstFont;
 			font-size: 18pt;
-		} 
+		}
 	</style>
 
 </head>
@@ -48,13 +48,13 @@
 					<span class="icon-bar"></span>
 				</button>
 				<!-- <a class="navbar-brand inline" href="index" id="name_head">ดร.คณิศร จี้กระโทก</a> -->
-				<?php echo anchor('Welcome/','ดร.คณิศร จี้กระโทก','class="navbar-brand inline" id="name_head" ');?>
+				<?php echo anchor('Welcome/index_page','ดร.คณิศร จี้กระโทก','class="navbar-brand inline" id="name_head" ');?>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li>
-						<a href="#">History</a>
+						<a href="index_page">index page</a>
 					</li>
 					<li>
 						<a href="#">Paper</a>

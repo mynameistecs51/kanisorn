@@ -63,12 +63,12 @@ class Login extends CI_model{
        return $get_news_userpost->result();
    }
 
-   public function id_check($fb_data){
-       $query_faceboo_id = $this->db->query("SELECT * FROM users WHERE user_facebook_id =".$fb_data['me']['id'])->num_rows();
+*/
+   public function checkID_first($fb_data){
+       $query_faceboo_id = $this->db->query("SELECT * FROM username WHERE user_fb =".$fb_data['me']['id'])->num_rows();
 
        return $query_faceboo_id;
    }
-*/
 
 }
 ?>

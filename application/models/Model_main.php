@@ -22,6 +22,11 @@ class Model_main extends CI_model{
 		return $get_University;
 	}
 
+	public function get_username()
+	{
+		$get_username =$this->db->query('SELECT * FROM username')->result();
+		return $get_username;
+	}
 	function update_uni(){
 		$uni_id = $this->input->post('uni_id');
 		$uni_data = $this->input->post('universityData');

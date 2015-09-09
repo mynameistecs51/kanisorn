@@ -54,7 +54,7 @@
 			<div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li>
-						<a href="#">History</a>
+						<a href="index_page">index page</a>
 					</li>
 					<li>
 						<a href="#">Paper</a>
@@ -62,15 +62,17 @@
 					<li>
 						<a href="#">Contact</a>
 					</li>
-					<li class="">
+					<li>
 						<?php
 						if(!$fb_data['me']){
 							echo anchor($fb_data['loginUrl'],'<image src="'.base_url().'files_upload/fb_login.png"/>');
 						}  else  {
-							echo anchor('https://www.facebook.com/profile.php?id='.$fb_data['me']['name'],' <img src="https://graph.facebook.com/'.$fb_data['uid'].'/picture" alt="" class="pic" />');
-							//echo "&nbsp;&nbsp;";
+							echo "<div>";
+							echo anchor('https://www.facebook.com/profile.php?id='.$fb_data['me']['name'],' <img src="https://graph.facebook.com/'.$fb_data['uid'].'/picture" alt="" class="pic " />');
+							echo "&nbsp;&nbsp;";
 							//echo "<br/>";
-							echo anchor('Welcome/logout','logout','class="pull-right "');
+							echo anchor('Welcome/logout','logout','class="pull-right navbar-brand inline "');
+							echo "</div>";
 						}
 						?>
 						<?php //echo anchor('Welcome/management','admin');?>

@@ -13,12 +13,44 @@ class Welcome extends CI_Controller {
 
 	public function index(){
 		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+		foreach ($this->db->where('user_fb',$fb_data['uid'])->get('username')->result() as  $value) {
+			$status = $value->user_status;
+		}
+
 		$data = array(
 			'active' => "history",	//select menu active
 			'get_university' => $this->Model_main->get_University(),
 			'fb_data' =>$fb_data,
 			);
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
 
+		}elseif ($this->Login->checkID_first($fb_data) <= 0) {
+			$data_fb = array(
+				'user_fb' => $fb_data['uid'],
+				'user_fbName' => $fb_data['me']['name'],
+				'user_email' => $fb_data['me']['email'],
+				'user_status' => 'public',
+				);
+			$this->db->insert('username',$data_fb);
+
+			redirect('Welcome/document','refresh');
+		}elseif($status == 'admin') {
+			redirect('Welcome/management','refresh');
+		}else{
+			$this->load->view('index',$data);
+		}
+	}
+
+	public function index_page()
+	{
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+		$data = array(
+			'active' => "history",	//select menu active
+			'get_university' => $this->Model_main->get_University(),
+			'fb_data' =>$fb_data,
+			);
 		$this->load->view('index',$data);
 	}
 
@@ -194,25 +226,25 @@ class Welcome extends CI_Controller {
 
 	public function update_table()
 	{	$value = $this->input->post('value');
-		unlink('./files_upload/file_picture/'.$value);
-		$this->Model_main->update_table( $value );
-		redirect('Welcome/mngTable','refresh');
-	}
+	unlink('./files_upload/file_picture/'.$value);
+	$this->Model_main->update_table( $value );
+	redirect('Welcome/mngTable','refresh');
+}
 
-	public function delete_table($value='')
-	{
-		unlink('./files_upload/file_picture/'.$value);
-		$this->db->where('table_name',$value)->delete('table_teacher');
-		redirect('Welcome/mngTable','refresh');
-	}
+public function delete_table($value='')
+{
+	unlink('./files_upload/file_picture/'.$value);
+	$this->db->where('table_name',$value)->delete('table_teacher');
+	redirect('Welcome/mngTable','refresh');
+}
 
-	public function show_table(){
-		$data = array(
-			'active' => "table_taecher",
-			'table_taecher' => $this->Model_main->get_tableTeacher(),
-			);
-		$this->load->view('table',$data);
-	}
+public function show_table(){
+	$data = array(
+		'active' => "table_taecher",
+		'table_taecher' => $this->Model_main->get_tableTeacher(),
+		);
+	$this->load->view('table',$data);
+}
 
 	public function contact(){	//show contact
 		$data = array(
@@ -236,7 +268,7 @@ class Welcome extends CI_Controller {
 		echo $string = fopen(base_url().'files_upload/file_document/'.$name,'r');
 	}
 
-	public function logout()		
+	public function logout()
 	{
 		$this->Login->logout();
 	}
