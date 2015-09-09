@@ -55,200 +55,338 @@ class Welcome extends CI_Controller {
 	}
 
 	public function management(){  //management page
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+
 		$data = array(
 			'active' => "history",
 			'get_university' => $this->Model_main->get_University(),
+			'fb_data' => $fb_data,
 			);
-		$this->load->view('admin/manage_history',$data);
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
+
+		}else{
+
+			$this->load->view('admin/manage_history',$data);
+		}
 	}
 
 	public function add_uniData(){  //add data university
-
-		$this->form_validation->set_rules('universityData','universityData','trim|required|xss_clean');
-		$this->form_validation->set_message('required', '::กรุณากรอกรายละเอียด ::');
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
 
 		$data = array(
 			'active' => "history",
 			'get_university' => $this->Model_main->get_University(),
+			'fb_data' => $fb_data,
 			);
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
 
-		if($this->form_validation->run() === FALSE){
-			$this->load->view('admin/manage_history',$data);
-			return FALSE;
 		}else{
+			$this->form_validation->set_rules('universityData','universityData','trim|required|xss_clean');
+			$this->form_validation->set_message('required', '::กรุณากรอกรายละเอียด ::');
+
+
+			if($this->form_validation->run() === FALSE){
+				$this->load->view('admin/manage_history',$data);
+				return FALSE;
+			}
 			$this->Model_main->insert_dataUniversity();
 		}
 		redirect('Welcome/management','refresh');
 	}
 
 	public function update_uni(){  //update data university
-		$this->Model_main->update_uni();
-		redirect('Welcome/management','refresh');
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
+
+		}else{
+			$this->Model_main->update_uni();
+			redirect('Welcome/management','refresh');
+		}
 	}
 
 	public function delete_uniID($uni_id){ //delete data university
-		$this->Model_main->delete_universityID($uni_id);
-		redirect('Welcome/management','refresh');
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
+
+		}else{
+			$this->Model_main->delete_universityID($uni_id);
+			redirect('Welcome/management','refresh');
+		}
 	}
 
 	public function  document(){  //show document
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
 		$data =array(
 			'active' => "document",
 			'show_doc' => $this->Model_main->get_doc(),
+			'fb_data' => $fb_data,
 			);
 		$this->load->view('document',$data);
 	}
 
 	public function mngDocument(){	//management data document
-		$data = array(
-			'active' => "document",
-			'show_doc' => $this->Model_main->get_doc(),
-			);
-		$this->load->view('admin/manage_document',$data);
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
+
+		}else{
+			$data = array(
+				'active' => "document",
+				'show_doc' => $this->Model_main->get_doc(),
+				'fb_data' => $fb_data,
+				);
+			$this->load->view('admin/manage_document',$data);
+		}
 	}
 
 	public function add_document(){
-		//$this->form_validation->set_rules('file_doc','file_doc','required');
-		$this->form_validation->set_rules('input_docName','input_docName','required');
-		$this->form_validation->set_message('required', '::กรุณากรอกรายละเอียด ::');
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
 
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
 
-		if( $this->form_validation->run() === FALSE ){
-			$this->mngDocument();	//load function mngDocument()
-			return false;
 		}else{
-			$this->Model_main->upload_fileDoc();		//upload document file --> function upload_fileDoc()
-			$this->mngDocument();		//load function mngDocument()
+			//$this->form_validation->set_rules('file_doc','file_doc','required');
+			$this->form_validation->set_rules('input_docName','input_docName','required');
+			$this->form_validation->set_message('required', '::กรุณากรอกรายละเอียด ::');
+
+
+			if( $this->form_validation->run() === FALSE ){
+				$this->mngDocument();	//load function mngDocument()
+				return false;
+			}else{
+				$this->Model_main->upload_fileDoc();		//upload document file --> function upload_fileDoc()
+				$this->mngDocument();		//load function mngDocument()
+			}
+			redirect('Welcome/mngDocument','refresh');
 		}
-		redirect('Welcome/mngDocument','refresh');
 	}
 
 	public function del_docID($doc_id=""){
-		if(!$doc_id){
-			redirect('Welcome/mngDocument','refresh');
-			return false;
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
+
 		}else{
+			if(!$doc_id){
+				redirect('Welcome/mngDocument','refresh');
+				return false;
+			}
 			$this->Model_main->delete_fileDoc($doc_id);
 			redirect('Welcome/mngDocument','refresh');
+
 		}
 	}
 
 	public function update_document(){
-		$file_docId = $this->input->post('file_docId');
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
 
-		if(!empty($_FILES['file_doc']['name'])){
-			$this->Model_main->update_file($file_docId);
-			$this->mngDocument();
-		}elseif($file_docId != null ){
-			$this->Model_main->update_fileDoc($file_docId);
-			//$this->mngDocument();
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
+
 		}else{
+			$file_docId = $this->input->post('file_docId');
+
+			if(!empty($_FILES['file_doc']['name'])){
+				$this->Model_main->update_file($file_docId);
+				$this->mngDocument();
+			}elseif($file_docId != null ){
+				$this->Model_main->update_fileDoc($file_docId);
+			//$this->mngDocument();
+			}
 			redirect('Welcome/mngDocument','refresh');
+
 		}
 	}
 
 	public function mngResearch(){	//management research
-		$data = array(
-			'active' => "research",
-			'inter_research' => $this->Model_main->get_research(),
-			);
-		$this->load->view('admin/manage_research',$data);
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
+
+		}else{
+			$data = array(
+				'active' => "research",
+				'inter_research' => $this->Model_main->get_research(),
+				'fb_data' => $fb_data,
+				);
+			$this->load->view('admin/manage_research',$data);
+		}
 	}
 
 	public function research(){
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
 		$data = array(
 			'active' => "research",
+			'fb_data' => $fb_data,
 			);
 		$this->load->view('research',$data);
 	}
 
 
 	function insert_research(){
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
 
-		if($_FILES  != null){
-			$upload_research = $this->Model_main->insert_Research('file_research',$_FILES['file_research']);
-			$name ="";
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
+
+		}else{
+			if($_FILES  != null){
+				$upload_research = $this->Model_main->insert_Research('file_research',$_FILES['file_research']);
+				$name ="";
 			// foreach ($upload_research as $key => $value) {
-			$a = explode(',',$upload_research);
-			for($i = 1 ; $i < count($a) ; $i++){
-				$name .= $a[$i].',';
-			}
-			$insert_research = array(
-				'res_name' => $this->input->post('input_resName'),
-				'res_file' => $a[0],
-				'res_pict' => substr($name,0,-1),
-				'res_detail' => $this->input->post('input_docDetail'),
-				'res_type' => $this->input->post('research_type'),
-				);
-			$this->db->insert('research',$insert_research);
+				$a = explode(',',$upload_research);
+				for($i = 1 ; $i < count($a) ; $i++){
+					$name .= $a[$i].',';
+				}
+				$insert_research = array(
+					'res_name' => $this->input->post('input_resName'),
+					'res_file' => $a[0],
+					'res_pict' => substr($name,0,-1),
+					'res_detail' => $this->input->post('input_docDetail'),
+					'res_type' => $this->input->post('research_type'),
+					);
+				$this->db->insert('research',$insert_research);
 
+			}
+			redirect('Welcome/mngResearch','refresh');
 		}
-		redirect('Welcome/mngResearch','refresh');
 
 	}
 
 	public function update_research(){
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
 
-		$this->Model_main->update_research();
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
+
+		}else{
+			$this->Model_main->update_research();
+			return true;
+		}
 	}
 
 	public function del_research($value=''){
-		if(!$value){
-			redirect('Welcome/mngResearch','refresh');
-			return false;
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
+
 		}else{
+			if(!$value){
+				redirect('Welcome/mngResearch','refresh');
+				return false;
+			}
 			$this->Model_main->delete_research($value);
 			redirect('Welcome/mngResearch','refresh');
 		}
 	}
 
 	public function mngTable(){
-		$data = array(
-			'active' => 'taecher',
-			);
-		$this->load->view('admin/mngTable',$data);
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
+
+		}else{
+			$data = array(
+				'active' => 'taecher',
+				'fb_data' => $fb_data,
+				);
+			$this->load->view('admin/mngTable',$data);
+		}
 	}
 
 	public function insert_table()
 	{
-		$this->form_validation->set_rules('num_trem','num_trem','required');
+			$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
 
+			if((!$fb_data['uid']) or (!$fb_data['me']))
+			{
+				$this->load->view('index',$data);
 
-		if( $this->form_validation->run() === FALSE ){
-			$this->mngTable();	//load function mngDocument()
-			return false;
-		}else{
-			$this->Model_main->upload_fileTable();		//upload document file --> function upload_fileDoc()
-			$this->mngTable();		//load function mngDocument()
+			}else{
+				$this->form_validation->set_rules('num_trem','num_trem','required');
+
+				if( $this->form_validation->run() === FALSE ){
+					$this->mngTable();	//load function mngDocument()
+					return false;
+				}else{
+				$this->Model_main->upload_fileTable();		//upload document file --> function upload_fileDoc()
+				$this->mngTable();		//load function mngDocument()
+			}
+			redirect('Welcome/mngTable','refresh');
 		}
-		redirect('Welcome/mngTable','refresh');
 	}
 
 	public function update_table()
-	{	$value = $this->input->post('value');
-	unlink('./files_upload/file_picture/'.$value);
-	$this->Model_main->update_table( $value );
-	redirect('Welcome/mngTable','refresh');
-}
+	{
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
 
-public function delete_table($value='')
-{
-	unlink('./files_upload/file_picture/'.$value);
-	$this->db->where('table_name',$value)->delete('table_teacher');
-	redirect('Welcome/mngTable','refresh');
-}
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
 
-public function show_table(){
-	$data = array(
-		'active' => "table_taecher",
-		'table_taecher' => $this->Model_main->get_tableTeacher(),
-		);
-	$this->load->view('table',$data);
-}
+		}else{
+			$value = $this->input->post('value');
+			unlink('./files_upload/file_picture/'.$value);
+			$this->Model_main->update_table( $value );
+			redirect('Welcome/mngTable','refresh');
+		}
+	}
+
+	public function delete_table($value='')
+	{
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
+
+		}else{
+			unlink('./files_upload/file_picture/'.$value);
+			$this->db->where('table_name',$value)->delete('table_teacher');
+			redirect('Welcome/mngTable','refresh');
+		}
+	}
+
+	public function show_table(){
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+		$data = array(
+			'active' => "table_taecher",
+			'table_taecher' => $this->Model_main->get_tableTeacher(),
+			'fb_data' => $fb_data,
+			);
+		$this->load->view('table',$data);
+	}
 
 	public function contact(){	//show contact
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
 		$data = array(
 			'active' => 'contact',
+			'fb_data' => $fb_data,
 			);
 		$this->load->view('contact',$data);
 	}
