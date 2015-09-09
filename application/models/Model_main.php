@@ -327,7 +327,7 @@ class Model_main extends CI_model{
 
 			}
 			$this->db->where('res_id',$row_research->res_id)->update('research',$update_research);
-			print_r($update_research);
+			return true;
 		}
 
 

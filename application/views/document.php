@@ -19,8 +19,10 @@
 						echo anchor(base_url().'files_upload/file_document/'.$row_doc->file_docPath, '<--ReadFile','target="_blank"');
 						?>
 					</span>
-					<br/><?php echo $row_doc->file_docDetail;?>
+					<br/>
+					<?php echo $row_doc->file_docDetail;?>
 				</p>
+
 				<hr/>
 			<?php endforeach ?>
 		</div>

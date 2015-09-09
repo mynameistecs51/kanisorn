@@ -282,7 +282,7 @@ class Welcome extends CI_Controller {
 
 		}else{
 			$this->Model_main->update_research();
-			return true;
+			redirect('Welcome/mngResearch','refresh');
 		}
 	}
 
