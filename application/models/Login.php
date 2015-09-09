@@ -37,7 +37,7 @@ class Login extends CI_model{
             'uid' => $user,
             'loginUrl' => $this->facebook->getLoginUrl(
                 array(
-                                'scope' => 'public_profile,email,first_name', // app permissions
+                                'scope' => 'public_profile,email', // app permissions
                                 'redirect_uri' => base_url(), // URL where you want to redirect your users after a successful login
                                 )
                 ),
@@ -67,7 +67,7 @@ class Login extends CI_model{
        $query_faceboo_id = $this->db->query("SELECT * FROM users WHERE user_facebook_id =".$fb_data['me']['id'])->num_rows();
 
        return $query_faceboo_id;
-   } 
+   }
 */
 
 }

@@ -29,7 +29,7 @@
 		#name_head {
 			font-family: myFirstFont;
 			font-size: 18pt;
-		} 
+		}
 	</style>
 
 </head>
@@ -62,18 +62,16 @@
 					<li>
 						<a href="#">Contact</a>
 					</li>
-					<li>
-						<?php 
-						if(!$fb_data['me']){     
+					<li class="">
+						<?php
+						if(!$fb_data['me']){
 							echo anchor($fb_data['loginUrl'],'<image src="'.base_url().'files_upload/fb_login.png"/>');
 						}  else  {
 							echo anchor('https://www.facebook.com/profile.php?id='.$fb_data['me']['name'],' <img src="https://graph.facebook.com/'.$fb_data['uid'].'/picture" alt="" class="pic" />');
-							echo "&nbsp;&nbsp;";
+							//echo "&nbsp;&nbsp;";
 							//echo "<br/>";
-							//echo $fb_data['me']['name']." "; 
-            						//echo anchor($fb_data['logoutUrl'],'logout');
-							echo anchor('Welcome/logout','logout','class="pull-right"');
-						} 
+							echo anchor('Welcome/logout','logout','class="pull-right "');
+						}
 						?>
 						<?php //echo anchor('Welcome/management','admin');?>
 					</li>
@@ -103,7 +101,7 @@
 
 				<div class="list-group"> <!-- เมนู -->
 
-					<?php 
+					<?php
 					$a = ($active == 'history' ? 'active' : '');
 					echo anchor('Welcome/index','<i class="fa fa-info-circle"> ประวัติการศึกษา</i>','class="list-group-item '.$a.'"');
 					$a = ($active == 'document' ? 'active' : '');
