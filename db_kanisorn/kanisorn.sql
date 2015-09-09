@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2015 at 03:41 PM
+-- Generation Time: Sep 09, 2015 at 05:09 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.5.24
 
@@ -64,7 +64,7 @@ INSERT INTO `research` (`res_id`, `res_name`, `res_file`, `res_pict`, `res_detai
 (14, 'national', '06_09_15_17_37.docx', '06_09_15_17_37_.png,06_09_15_17_37_1.png', 'national', 'national'),
 (15, 'international', '06_09_15_17_371.docx', '06_09_15_17_37_2.png,06_09_15_17_37_3.png', 'international', 'international'),
 (24, 'national test', '06_09_15_21_14.docx', '06_09_15_21_27_.jpg,06_09_15_21_27_1.jpg', 'national test', 'national'),
-(25, 'national1', '06_09_15_22_30_.PDF', '06_09_15_22_30_.jpg,06_09_15_22_30_1.jpg', 'national1', 'national'),
+(25, 'national1', '09_09_15_17_06_.pdf', '06_09_15_22_30_.jpg,06_09_15_22_30_1.jpg', 'national1', 'national'),
 (26, 'international test', '06_09_15_22_36_.PDF', '06_09_15_22_36_.jpg,06_09_15_22_36_1.jpg', 'international', 'international');
 
 -- --------------------------------------------------------
