@@ -411,5 +411,79 @@ class Welcome extends CI_Controller {
 		$this->Login->logout();
 	}
 
-}
-?>
+	public function mngPiture_Profile()
+	{
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+		$data = array(
+			'active' => 'pictureProfile',
+			'fb_data' => $fb_data,
+			);
+		$this->load->view('admin/mngProfile_picture',$data);
+	}
+
+	public function insert_picturePofile()
+	{
+		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+		if((!$fb_data['uid']) or (!$fb_data['me']))
+		{
+			$this->load->view('index',$data);
+
+		}else{
+			$file_name =  date('d_m_y_H_i_s');
+			$config['upload_path'] =  './picture/picProfile';
+			$config['allowed_types'] = 'jpg|jpeg|png|';
+			$config['file_name'] = $file_name.'.'.substr($_FILES['picture_profile']['name'],-4);		//file_name
+			//$config['remove_spaces'] = TRUE;
+
+			$this->load->library("upload",$config);		//library upload
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('picture_profile')){	//ถ้า upload ไม่มีปัญหา
+				$insert_table = array(
+					'picPro_name' => $this->upload->data('file_name'),
+					);
+				$this->db->insert('picture_profile',$insert_table);
+			}else{
+				return $this->upload->display_errors();
+			}
+			redirect('Welcome/mngPiture_Profile','refresh');
+		}
+	}
+
+	public function update_picProfile()
+	{
+		$file_name = $this->db->where('picPro_id',$this->input->post('value_id'))->get('picture_profile')->result();
+		foreach ($file_name as $row_fileName) {
+			unlink('./picture/picProfile/'.$row_fileName->picPro_name);
+
+		}
+		$file_name =  date('d_m_y_H_i_s');
+		$config['upload_path'] =  './picture/picProfile';
+		$config['allowed_types'] = 'jpg|jpeg|png|';
+			$config['file_name'] = $file_name.'.'.substr($_FILES['file_picture']['name'],-4);		//file_name
+			//$config['remove_spaces'] = TRUE;
+
+			$this->load->library("upload",$config);		//library upload
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('file_picture')){	//ถ้า upload ไม่มีปัญหา
+				$update_picture = array(
+					'picPro_name' => $this->upload->data('file_name'),
+					);
+				$this->db->where('picPro_id',$this->input->post('value_id'));
+				$this->db->update('picture_profile',$update_picture);
+
+			}else{
+				return $this->upload->display_errors();
+			}
+			redirect('Welcome/mngPiture_Profile','refresh');
+
+		}
+
+		public function delete_picProfile($value='')
+		{
+			unlink('./picture/picProfile/'.$value);
+			$this->db->where('picPro_name',$value)->delete('picture_profile');
+			redirect('Welcome/mngPiture_Profile','refresh');
+		}
+
+	}
+	?>

@@ -92,8 +92,17 @@
 				<!-- showPicture -->
 				<div class="form-group row ">
 					<div class="col-xs-12 text-center">
-						<a href="index" class="thumbnail">
-							<img src="<?php echo base_url();?>picture/picProfile/1.jpg" alt="รูปโปรไฟล์">
+						<a href="index_page" class="thumbnail">
+							<?php foreach ($this->db->get('picture_profile')->result() as $row_pic) {
+								if(count($row_pic->picPro_name) < 1){
+
+									echo '<img src="'.base_url().'picture/picProfile/no_picture.jpg" alt="รูปโปรไฟล์">';
+								}
+
+									echo '<img src="'.base_url().'picture/picProfile/'.$row_pic->picPro_name.'" alt="รูปโปรไฟล์">';
+
+							}
+							?>
 						</a>
 						<div id="name_head" class="col-md-12">ดร.คณิศร  จี้กระโทก</div>
 					</div>
@@ -103,6 +112,10 @@
 				<div class="list-group"> <!-- เมนู -->
 
 					<?php
+					$a = ($active == 'pictureProfile' ? 'active': '');
+					echo anchor('Welcome/mngPiture_Profile','<i class="glyphicon glyphicon-user"> จัดารภาพโปรไฟล์</i>','class="list-group-item '.$a.'"');
+					$a = ($active == 'pictureSlide' ? 'active': '');
+					echo anchor('Welcome/contact','<i class="glyphicon glyphicon-picture"> จัดการภาพสไลด้</i>','class="list-group-item '.$a.'"');
 					$a = ($active == 'history' ? 'active' : '');
 					echo anchor('Welcome/management','<i class="fa fa-info-circle"> จัดการประวัติการศึกษา</i>','class="list-group-item '.$a.'"');
 					$a = ($active == 'document' ? 'active' : '');
@@ -113,6 +126,7 @@
 					echo anchor('Welcome/mngTable','<i class="fa fa-newspaper-o"> จัดการตารางสอน</i>','class="list-group-item '.$a.'"');
 					$a = ($active == 'contact' ? 'active': '');
 					echo anchor('Welcome/contact','<i class="fa fa-commenting"> จัดการติดต่อ</i>','class="list-group-item '.$a.'"');
+
 					?>
 
 				</div>  <!-- /.end menu -->

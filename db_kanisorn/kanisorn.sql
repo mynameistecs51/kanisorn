@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2015 at 05:09 PM
+-- Generation Time: Sep 10, 2015 at 03:37 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.5.24
 
@@ -40,6 +40,24 @@ CREATE TABLE IF NOT EXISTS `file_document` (
 INSERT INTO `file_document` (`file_docId`, `file_subName`, `file_docPath`, `file_docDetail`) VALUES
 (0, 'test update', '17_08_15_16_48_11document.pdf', 'ทดสอบการอัพเดท'),
 (3, 'dd', '06_09_15_22_01_47_.jpg', 'dd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `picture_profile`
+--
+
+CREATE TABLE IF NOT EXISTS `picture_profile` (
+  `picPro_id` int(11) NOT NULL,
+  `picPro_name` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `picture_profile`
+--
+
+INSERT INTO `picture_profile` (`picPro_id`, `picPro_name`) VALUES
+(14, '10_09_15_15_08_25_.jpg');
 
 -- --------------------------------------------------------
 
@@ -138,6 +156,12 @@ ALTER TABLE `file_document`
   ADD PRIMARY KEY (`file_docId`);
 
 --
+-- Indexes for table `picture_profile`
+--
+ALTER TABLE `picture_profile`
+  ADD PRIMARY KEY (`picPro_id`);
+
+--
 -- Indexes for table `research`
 --
 ALTER TABLE `research`
@@ -165,6 +189,11 @@ ALTER TABLE `username`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `picture_profile`
+--
+ALTER TABLE `picture_profile`
+  MODIFY `picPro_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `username`
 --

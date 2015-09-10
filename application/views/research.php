@@ -73,7 +73,6 @@
 																					</div>
 																					<?php } //endfor	?>
 																				</div>
-
 																			</div>	<!-- /.panel body -->
 																		</div>	<!-- /.panel  -->
 																	</div><!-- end modal -->
