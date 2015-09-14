@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 14, 2015 at 03:05 PM
+-- Generation Time: Sep 14, 2015 at 05:10 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.5.24
 
@@ -33,14 +33,6 @@ CREATE TABLE IF NOT EXISTS `file_document` (
   `file_docDetail` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `file_document`
---
-
-INSERT INTO `file_document` (`file_docId`, `file_subName`, `file_docPath`, `file_docDetail`) VALUES
-(1, 'test update', '17_08_15_16_48_11document.pdf', 'ทดสอบการอัพเดท'),
-(3, 'dd', '06_09_15_22_01_47_.jpg', 'dd');
-
 -- --------------------------------------------------------
 
 --
@@ -52,13 +44,6 @@ CREATE TABLE IF NOT EXISTS `picture_profile` (
   `picPro_name` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `picture_profile`
---
-
-INSERT INTO `picture_profile` (`picPro_id`, `picPro_name`) VALUES
-(17, '11_09_15_12_29_24_.jpg');
-
 -- --------------------------------------------------------
 
 --
@@ -69,13 +54,6 @@ CREATE TABLE IF NOT EXISTS `picture_slide` (
   `picSlide_id` int(11) NOT NULL,
   `picSlide_name` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `picture_slide`
---
-
-INSERT INTO `picture_slide` (`picSlide_id`, `picSlide_name`) VALUES
-(4, '11_09_15_11_25_.jpg,11_09_15_11_25_1.jpg,11_09_15_11_25_2.jpg');
 
 -- --------------------------------------------------------
 
@@ -92,17 +70,6 @@ CREATE TABLE IF NOT EXISTS `research` (
   `res_type` enum('national','international') NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `research`
---
-
-INSERT INTO `research` (`res_id`, `res_name`, `res_file`, `res_pict`, `res_detail`, `res_type`) VALUES
-(14, 'national', '06_09_15_17_37.docx', '06_09_15_17_37_.png,06_09_15_17_37_1.png', 'national', 'national'),
-(15, 'international', '06_09_15_17_371.docx', '06_09_15_17_37_2.png,06_09_15_17_37_3.png', 'international', 'international'),
-(24, 'national test', '06_09_15_21_14.docx', '06_09_15_21_27_.jpg,06_09_15_21_27_1.jpg', 'national test', 'national'),
-(25, 'national1', '09_09_15_17_06_.pdf', '06_09_15_22_30_.jpg,06_09_15_22_30_1.jpg', 'national1', 'national'),
-(26, 'international test', '06_09_15_22_36_.PDF', '06_09_15_22_36_.jpg,06_09_15_22_36_1.jpg', 'international', 'international');
-
 -- --------------------------------------------------------
 
 --
@@ -115,13 +82,6 @@ CREATE TABLE IF NOT EXISTS `table_teacher` (
   `table_name` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `table_teacher`
---
-
-INSERT INTO `table_teacher` (`table_id`, `table_trem`, `table_name`) VALUES
-(1, '1/2558', '07_09_15_15_49_08_.jpg');
-
 -- --------------------------------------------------------
 
 --
@@ -132,15 +92,6 @@ CREATE TABLE IF NOT EXISTS `university` (
   `uni_id` int(11) NOT NULL,
   `uni_data` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `university`
---
-
-INSERT INTO `university` (`uni_id`, `uni_data`) VALUES
-(3, 'สาขาวิชาวิทยาการคอมพิวเตอร์ คณะวิทยาศาสตร์ มหาวิทยาลัยราชภัฏอุดรธานี'),
-(6, 'สาขาวิชาเทคโนโลยีสารสนเทศ คณะวิทยาศาสตร์ มหาวิทยาลัยราชภัฏอุดรธานี'),
-(7, 'สาขาวิชาคอมพิวเตอร์ศึกษา คณะครุศาสตร์ มหาวิทยาลัยราชภัฏอุดรธานี');
 
 -- --------------------------------------------------------
 
@@ -155,13 +106,6 @@ CREATE TABLE IF NOT EXISTS `username` (
   `user_email` text NOT NULL,
   `user_status` enum('public','admin') NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `username`
---
-
-INSERT INTO `username` (`user_id`, `user_fb`, `user_fbName`, `user_email`, `user_status`) VALUES
-(1, '1041856095832668', 'เต้ ไชยวัฒน์', 'mynameistecs51@gmail.com', 'admin');
 
 --
 -- Indexes for dumped tables
