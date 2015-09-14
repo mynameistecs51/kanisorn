@@ -424,13 +424,14 @@ class Welcome extends CI_Controller {
 	public function insert_picturePofile()
 	{
 		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
-		if((!$fb_data['uid']) or (!$fb_data['me']))
-		{
-			$this->load->view('index',$data);
 
+		if(!$fb_data['uid'])
+		{
+			$data = array('fb_data'=>$fb_data,);
+			$this->load->view('index',$data);
 		}else{
 			$file_name =  date('d_m_y_H_i_s');
-			$config['upload_path'] =  './picture/picProfile';
+			$config['upload_path'] =  './picture/picProfile/';
 			$config['allowed_types'] = 'jpg|jpeg|png|';
 			$config['file_name'] = $file_name.'.'.substr($_FILES['picture_profile']['name'],-4);		//file_name
 			//$config['remove_spaces'] = TRUE;
@@ -438,15 +439,16 @@ class Welcome extends CI_Controller {
 			$this->load->library("upload",$config);		//library upload
 			$this->upload->initialize($config);
 			if($this->upload->do_upload('picture_profile')){	//ถ้า upload ไม่มีปัญหา
-				$insert_table = array(
+				$insert_picture = array(
 					'picPro_name' => $this->upload->data('file_name'),
 					);
-				$this->db->insert('picture_profile',$insert_table);
+				$this->db->insert('picture_profile',$insert_picture);
 			}else{
-				return $this->upload->display_errors();
+				print_r($this->upload->display_errors());
 			}
 			redirect('Welcome/mngPiture_Profile','refresh');
 		}
+		redirect('Welcome/mngPiture_Profile','refresh');
 	}
 
 	public function update_picProfile()
@@ -483,6 +485,50 @@ class Welcome extends CI_Controller {
 			unlink('./picture/picProfile/'.$value);
 			$this->db->where('picPro_name',$value)->delete('picture_profile');
 			redirect('Welcome/mngPiture_Profile','refresh');
+		}
+
+		public function mngPicture_slide()
+		{
+			$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+			$data = array(
+				'active' => 'pictureSlide',
+				'fb_data' => $fb_data,
+				);
+			$this->load->view('admin/mngPicture_slide',$data);
+		}
+
+		public function insert_pictureSlide()
+		{
+			$pic_slide = $this->Model_main->upload_picSlide('picture_slide');
+			$this->db->insert('picture_slide',array('picSlide_name' => $pic_slide));
+			redirect('Welcome/mngPicture_slide','refresh');
+		}
+
+		public function delet_slide($value='')
+		{
+			$picture = $this->db->where('picSlide_id',$value)->get('picture_slide')->result();
+			foreach ($picture as $row_slide) {
+				$name_slide = explode(',',$row_slide->picSlide_name);
+				for($i=0;$i < count($name_slide);$i++){
+					unlink('./picture/slides/'.$name_slide[$i]);
+				}
+			}
+			$this->db->where('picSlide_id',$value);
+			$this->db->delete('picture_slide');
+		}
+
+		public function update_slide()
+		{
+			$picture = $this->db->where('picSlide_id',$this->input->post('value_id'))->get('picture_slide')->result();
+			foreach ($picture as $row_slide) {
+				$name_slide = explode(',',$row_slide->picSlide_name);
+				for($i=0;$i < count($name_slide);$i++){
+					unlink('./picture/slides/'.$name_slide[$i]);
+				}
+			}
+			$pic_slide = $this->Model_main->upload_picSlide('picture_slide');
+			$this->db->update('picture_slide',array('picSlide_name' => $pic_slide));
+			redirect('Welcome/mngPicture_slide','refresh');
 		}
 
 	}

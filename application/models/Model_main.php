@@ -330,7 +330,37 @@ class Model_main extends CI_model{
 			return true;
 		}
 
+		function upload_picSlide($filed)
+		{
+			$date = date("d_m_y_H_i");
+			$name_array = array();
+			$count = count($_FILES[$filed]['name']);
 
+			foreach($_FILES as $key => $value){
+				for($s=0; $s < $count; $s++) {
+
+					$_FILES[$filed]['name'] = $date.'.'.substr($value['name'][$s],-4);
+					$_FILES[$filed]['type']    = $value['type'][$s];
+					$_FILES[$filed]['tmp_name'] = $value['tmp_name'][$s];
+					$_FILES[$filed]['error']       = $value['error'][$s];
+					$_FILES[$filed]['size']    = $value['size'][$s];
+					$config['upload_path'] = './picture/slides/';
+					$config['allowed_types'] = 'gif|jpg|png|jpeg';
+					$this->load->library('upload', $config);
+					$this->upload->do_upload($filed);
+					$data = $this->upload->data();
+					$name_array[] = $data['file_name'];
+				}
+			}
+			$names_research = implode(',', $name_array);
+		/*
+		 $this->load->database();
+		$db_data = array('id'=> NULL,
+		'name'=> $names);
+		$this->db->insert('testtable',$db_data);
+		*/
+		return $names_research;
 	}
+}
 
-	?>
+?>

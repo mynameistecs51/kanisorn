@@ -115,7 +115,7 @@
 					$a = ($active == 'pictureProfile' ? 'active': '');
 					echo anchor('Welcome/mngPiture_Profile','<i class="glyphicon glyphicon-user"> จัดารภาพโปรไฟล์</i>','class="list-group-item '.$a.'"');
 					$a = ($active == 'pictureSlide' ? 'active': '');
-					echo anchor('Welcome/contact','<i class="glyphicon glyphicon-picture"> จัดการภาพสไลด้</i>','class="list-group-item '.$a.'"');
+					echo anchor('Welcome/mngPicture_slide','<i class="glyphicon glyphicon-picture"> จัดการภาพสไลด้</i>','class="list-group-item '.$a.'"');
 					$a = ($active == 'history' ? 'active' : '');
 					echo anchor('Welcome/management','<i class="fa fa-info-circle"> จัดการประวัติการศึกษา</i>','class="list-group-item '.$a.'"');
 					$a = ($active == 'document' ? 'active' : '');

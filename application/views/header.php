@@ -94,7 +94,16 @@
 				<div class="form-group row ">
 					<div class="col-xs-12 text-center">
 						<a href="index" class="thumbnail">
-							<img src="<?php echo base_url();?>picture/picProfile/1.jpg" alt="รูปโปรไฟล์">
+							<?php foreach ($this->db->get('picture_profile')->result() as $row_pic) {
+								if(count($row_pic->picPro_name) < 1){
+
+									echo '<img src="'.base_url().'picture/picProfile/no_picture.jpg" alt="รูปโปรไฟล์">';
+								}
+
+								echo '<img src="'.base_url().'picture/picProfile/'.$row_pic->picPro_name.'" alt="รูปโปรไฟล์">';
+
+							}
+							?>
 						</a>
 						<div id="name_head" class="col-md-12">ดร.คณิศร  จี้กระโทก</div>
 					</div>
@@ -136,34 +145,51 @@
 
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner" role="listbox">
-							<div class="item active">
-								<img class="img-responsive"  src="<?php echo base_url();?>picture/slides/1.jpg" alt="" style="height: 300px;"/>
+							<?php foreach ($this->db->get('picture_slide')->result() as $row_slide) {
+								$slide = explode(',',$row_slide->picSlide_name);
+								if(count($slide)<1){
+									echo '<div class="item active">
+									<img class="img-responsive"  src="'.base_url().'picture/slides/'.$slide[0].'" alt="" style="height: 300px;"/>
+									<div class="carousel-caption">
+										...
+									</div>
+								</div>';
+							}else{
+								echo '<div class="item active">
+								<img class="img-responsive"  src="'.base_url().'picture/slides/'.$slide[0].'" alt="" style="height: 300px;"/>
 								<div class="carousel-caption">
 									...
 								</div>
-							</div>
-							<div class="item" >
-								<img class="img-responsive"  src="<?php echo base_url();?>picture/slides/2.jpg" alt="" style="height: 300px;"/>
-								<div class="carousel-caption">
-									...
-								</div>
-							</div>
-							<div class="item">
-								<img class="img-responsive"  src="<?php echo base_url();?>picture/slides/3.jpg" alt="" style="height: 300px;"/>
-								<div class="carousel-caption">
-									...
-								</div>
-							</div>
-						</div>
+							</div>';
+							for($i=1;$i < count($slide);$i++){
+								echo '
+								<div class="item" >
+									<img class="img-responsive"  src="'.base_url().'picture/slides/'.$slide[$i].'" alt="" style="height: 300px;"/>
+									<div class="carousel-caption">
+										...
+									</div>
+								</div>';
+							}
+						}
+					}
+					?>
 
-						<!-- Controls -->
-						<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-							<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-							<span class="sr-only">Previous</span>
-						</a>
-						<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-							<span class="sr-only">Next</span>
-						</a>
+						<!-- <div class="item">
+							<img class="img-responsive"  src="<?php echo base_url();?>picture/slides/3.jpg" alt="" style="height: 300px;"/>
+							<div class="carousel-caption">
+								...
+							</div>
+						</div> -->
 					</div>
+
+					<!-- Controls -->
+					<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a>
+					<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
+				</div>
 				</div>  <!-- /.end show slide -->

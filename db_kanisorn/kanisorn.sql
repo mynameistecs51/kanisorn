@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2015 at 03:37 PM
+-- Generation Time: Sep 14, 2015 at 03:05 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.5.24
 
@@ -31,14 +31,14 @@ CREATE TABLE IF NOT EXISTS `file_document` (
   `file_subName` text NOT NULL,
   `file_docPath` text NOT NULL,
   `file_docDetail` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `file_document`
 --
 
 INSERT INTO `file_document` (`file_docId`, `file_subName`, `file_docPath`, `file_docDetail`) VALUES
-(0, 'test update', '17_08_15_16_48_11document.pdf', 'ทดสอบการอัพเดท'),
+(1, 'test update', '17_08_15_16_48_11document.pdf', 'ทดสอบการอัพเดท'),
 (3, 'dd', '06_09_15_22_01_47_.jpg', 'dd');
 
 -- --------------------------------------------------------
@@ -50,14 +50,32 @@ INSERT INTO `file_document` (`file_docId`, `file_subName`, `file_docPath`, `file
 CREATE TABLE IF NOT EXISTS `picture_profile` (
   `picPro_id` int(11) NOT NULL,
   `picPro_name` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `picture_profile`
 --
 
 INSERT INTO `picture_profile` (`picPro_id`, `picPro_name`) VALUES
-(14, '10_09_15_15_08_25_.jpg');
+(17, '11_09_15_12_29_24_.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `picture_slide`
+--
+
+CREATE TABLE IF NOT EXISTS `picture_slide` (
+  `picSlide_id` int(11) NOT NULL,
+  `picSlide_name` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `picture_slide`
+--
+
+INSERT INTO `picture_slide` (`picSlide_id`, `picSlide_name`) VALUES
+(4, '11_09_15_11_25_.jpg,11_09_15_11_25_1.jpg,11_09_15_11_25_2.jpg');
 
 -- --------------------------------------------------------
 
@@ -72,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `research` (
   `res_pict` text NOT NULL,
   `res_detail` text NOT NULL,
   `res_type` enum('national','international') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `research`
@@ -92,17 +110,17 @@ INSERT INTO `research` (`res_id`, `res_name`, `res_file`, `res_pict`, `res_detai
 --
 
 CREATE TABLE IF NOT EXISTS `table_teacher` (
-  `table_id` int(11) NOT NULL DEFAULT '0',
+  `table_id` int(11) NOT NULL,
   `table_trem` char(9) NOT NULL,
   `table_name` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `table_teacher`
 --
 
 INSERT INTO `table_teacher` (`table_id`, `table_trem`, `table_name`) VALUES
-(0, '1/2558', '07_09_15_15_49_08_.jpg');
+(1, '1/2558', '07_09_15_15_49_08_.jpg');
 
 -- --------------------------------------------------------
 
@@ -113,7 +131,7 @@ INSERT INTO `table_teacher` (`table_id`, `table_trem`, `table_name`) VALUES
 CREATE TABLE IF NOT EXISTS `university` (
   `uni_id` int(11) NOT NULL,
   `uni_data` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `university`
@@ -162,6 +180,12 @@ ALTER TABLE `picture_profile`
   ADD PRIMARY KEY (`picPro_id`);
 
 --
+-- Indexes for table `picture_slide`
+--
+ALTER TABLE `picture_slide`
+  ADD PRIMARY KEY (`picSlide_id`);
+
+--
 -- Indexes for table `research`
 --
 ALTER TABLE `research`
@@ -171,7 +195,7 @@ ALTER TABLE `research`
 -- Indexes for table `table_teacher`
 --
 ALTER TABLE `table_teacher`
-  ADD PRIMARY KEY (`table_trem`);
+  ADD PRIMARY KEY (`table_id`);
 
 --
 -- Indexes for table `university`
@@ -190,10 +214,35 @@ ALTER TABLE `username`
 --
 
 --
+-- AUTO_INCREMENT for table `file_document`
+--
+ALTER TABLE `file_document`
+  MODIFY `file_docId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `picture_profile`
 --
 ALTER TABLE `picture_profile`
-  MODIFY `picPro_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `picPro_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+--
+-- AUTO_INCREMENT for table `picture_slide`
+--
+ALTER TABLE `picture_slide`
+  MODIFY `picSlide_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `research`
+--
+ALTER TABLE `research`
+  MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
+--
+-- AUTO_INCREMENT for table `table_teacher`
+--
+ALTER TABLE `table_teacher`
+  MODIFY `table_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `university`
+--
+ALTER TABLE `university`
+  MODIFY `uni_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `username`
 --
