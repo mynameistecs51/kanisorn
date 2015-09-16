@@ -13,27 +13,33 @@
 				<div class="panel-heading">
 					<ul class="nav nav-tabs">
 						<?php
+						$id = array();
+						$b = array();
+
 						foreach ($show_subj as $key => $row_subj):
-							echo $key."=".$row_subj->subj_name;
+						// 	$id = array('id'=>$row_subj->subj_id);
+						// $name = $row_subj->subj_name.',';
+						// print_r($name);
 						echo '<li class="active"><a href="#tab'.$row_subj->subj_id.'" data-toggle="tab">'.$row_subj->subj_name.'</a></li>';
-						echo '<li class=""><a href="#tab'.$key[1].'" data-toggle="tab">'.$row_subj->subj_name.'</a></li>';
+						//echo '<li class="active"><a href="#tab'.$key[1].'" data-toggle="tab">'.$row_subj->subj_name.'</a></li>';
 						?>
 
-					<?php endforeach; ?>
-				</ul>
-			</div>
-			<div class="panel-body">
-				<div class="tab-content">
-					<div class="tab-pane fade in active" id="tab1<?php echo $row_subj->subj_id;?>">  <!-- show subj 1 -->
-						<div class="panel panel-success">
-							<div class="panel-heading">รายการ</div>
-							<div class="panel-body">
-
-							</div>  <!-- end panal body -->
-						</div>  <!-- panel panel-success -->
-					</div>  <!-- end show subj 1 -->
+					</ul>
 				</div>
-			</div>
+				<div class="panel-body">
+					<div class="tab-content">
+						<div class="tab-pane fade in active" id="tab1<?php echo $row_subj->subj_id;?>">  <!-- show subj 1 -->
+							<div class="panel panel-success">
+								<div class="panel-heading">รายการ</div>
+								<div class="panel-body">
+									<?php echo $row_subj->subj_name;?>
+								</div>  <!-- end panal body -->
+							</div>  <!-- panel panel-success -->
+						</div>  <!-- end show subj 1 -->
+					</div>
+				</div>
+
+			<?php endforeach; ?>
 			<!-- ./ show subject -->
 					<?php /*foreach ($show_doc as $row_doc) : ?>
 						<p>
