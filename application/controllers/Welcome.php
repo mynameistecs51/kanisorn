@@ -130,6 +130,7 @@ class Welcome extends CI_Controller {
 			'active' => "document",
 			'show_doc' => $this->Model_main->get_doc(),
 			'fb_data' => $fb_data,
+			'show_subj' => $this->db->get('subjects')->result(),
 			);
 		$this->load->view('document',$data);
 	}
@@ -137,14 +138,16 @@ class Welcome extends CI_Controller {
 	public function mngDocument(){	//management data document
 		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
 
-		if((!$fb_data['uid']) or (!$fb_data['me']))
+		if($fb_data['uid'] =="")
 		{
-			$this->load->view('index',$data);
+			//$this->load->view('index',$data);
+			redirect('Welcome','refresh');
 
 		}else{
 			$data = array(
 				'active' => "document",
 				'show_doc' => $this->Model_main->get_doc(),
+				'show_subj' => $this->db->get('subjects')->result(),
 				'fb_data' => $fb_data,
 				);
 			$this->load->view('admin/manage_document',$data);
@@ -531,5 +534,34 @@ class Welcome extends CI_Controller {
 			redirect('Welcome/mngPicture_slide','refresh');
 		}
 
+		public function mngsubjects()
+		{
+			$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+			$data = array(
+				'active' => 'subjects',
+				'fb_data' => $fb_data,
+				'get_subj' => $this->db->get('subjects')->result(),
+				);
+			$this->load->view('admin/mngSubjects',$data);
+		}
+
+		public function insert_subjects()
+		{
+			$this->Model_main->insertSubjects();
+			redirect('Welcome/mngsubjects','refresh');
+		}
+
+		public function delete_subj($value='')
+		{
+			$this->db->where('subj_id',$value);
+			$this->db->delete('subjects');
+			redirect('Welcome/mngsubjects','refresh');
+		}
+
+		public function update_subj()
+		{
+			$this->Model_main->update_subj();
+			redirect('Welcome/mngsubjects','refresh');
+		}
 	}
 	?>

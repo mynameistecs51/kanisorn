@@ -26,6 +26,7 @@
 						<label for="file_table" class="col-sm-2 control-label" >เพิ่มไฟล์</label>
 						<div class="col-sm-4 ">
 							<input type="file" id="file_table" class="form-control" name="file_table" value="" size="20" />
+							<output id="list"></output>
 							<?php
 							if(!empty($file_error)){
 								echo '<div class="form_error1">::',$file_error.'::</div>';
@@ -78,6 +79,7 @@
 									<label for="file_table" class="col-sm-2 control-label" >เพิ่มไฟล์</label>
 									<div class="col-sm-4 ">
 										<input type="file" id="file_table" class="form-control" name="file_table" value="" size="20" />
+										<output id="list"></output>
 										<?php
 										if(!empty($file_error)){
 											echo '<div class="form_error1">::',$file_error.'::</div>';
@@ -113,5 +115,42 @@
 <hr>
 
 </div> <!-- /.end show history -->
+<script type="text/javascript">
+	function handleFileSelect(evt) {
+		var files = evt.target.files;
 
+    		// Loop through the FileList and render image files as thumbnails.
+    		for (var i = 0, f; f = files[i]; i++) {
+
+    		  // Only process image files.
+    		  if (!f.type.match('image.*')) {
+    		  	continue;
+    		  }
+
+    		  var reader = new FileReader();
+
+     		 // Closure to capture the file information.
+     		 reader.onload = (function(theFile) {
+     		 	return function(e) {
+       		   // Render thumbnail.
+       		   var span = document.createElement('span');
+       		   span.innerHTML =
+       		   [
+       		   '<img style="height: 75px; border: 1px solid #000; margin: 5px" src="',
+       		   e.target.result,
+       		   '" title="', escape(theFile.name),
+       		   '"/>'
+       		   ].join('');
+
+       		   document.getElementById('list').insertBefore(span, null);
+       		};
+       	})(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+   }
+}
+document.getElementById('file_table').addEventListener('change', handleFileSelect, false);
+
+</script>
 <?php $this->load->view('footer');?>

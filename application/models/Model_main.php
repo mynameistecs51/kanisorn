@@ -45,9 +45,10 @@ class Model_main extends CI_model{
 	function insert_doc($name_file){
 		$data_insert = array(
 			'file_docId' =>'',
-			'file_subName' => $this->input->post('input_docName'),
+			'subj_id' => $this->input->post('input_docName'),
 			'file_docPath' => $name_file,
 			'file_docDetail' => $this->input->post('input_docDetail'),
+			'file_subName' => '',
 			);
 		$this->db->insert('file_document',$data_insert);
 	}
@@ -360,6 +361,22 @@ class Model_main extends CI_model{
 		$this->db->insert('testtable',$db_data);
 		*/
 		return $names_research;
+	}
+
+	public function insertSubjects()
+	{
+		$subjects_name = $this->input->post('subj_name');
+		$this->db->insert('subjects',array('subj_name' => $subjects_name));
+		return true;
+	}
+
+	public function update_subj()
+	{
+		$subj_id = $this->input->post('subj_id');
+		$subj_name =$this->input->post('subj_name');
+		$this->db->where('subj_id',$subj_id);
+		$this->db->update('subjects',array('subj_name' => $subj_name));
+		return true;
 	}
 }
 

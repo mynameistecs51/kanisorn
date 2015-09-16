@@ -13,6 +13,7 @@
 
 	<!-- Bootstrap Core CSS -->
 	<link href="<?php echo base_url();?>css/bootstrap.min.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>css/bbootstrap-select.css" rel="stylesheet">
 
 	<!-- Custom CSS -->
 	<link href="<?php echo base_url();?>css/shop-item.css" rel="stylesheet">
@@ -99,7 +100,7 @@
 									echo '<img src="'.base_url().'picture/picProfile/no_picture.jpg" alt="รูปโปรไฟล์">';
 								}
 
-									echo '<img src="'.base_url().'picture/picProfile/'.$row_pic->picPro_name.'" alt="รูปโปรไฟล์">';
+								echo '<img src="'.base_url().'picture/picProfile/'.$row_pic->picPro_name.'" alt="รูปโปรไฟล์">';
 
 							}
 							?>
@@ -126,7 +127,8 @@
 					echo anchor('Welcome/mngTable','<i class="fa fa-newspaper-o"> จัดการตารางสอน</i>','class="list-group-item '.$a.'"');
 					$a = ($active == 'contact' ? 'active': '');
 					echo anchor('Welcome/contact','<i class="fa fa-commenting"> จัดการติดต่อ</i>','class="list-group-item '.$a.'"');
-
+					$a = ($active == 'subjects' ? 'active': '');
+					echo anchor('Welcome/mngsubjects','<i class="fa fa-commenting"> เพิ่มรายวิชา</i>','class="list-group-item '.$a.'"');
 					?>
 
 				</div>  <!-- /.end menu -->
