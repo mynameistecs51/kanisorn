@@ -28,19 +28,14 @@
 			<div class="panel-body">
 				<div class="tab-content">
 					<?php foreach ($show_doc as $row_doc): ?>
-						<?php echo $row_doc->file_docDetail;?>
-						<div class="tab-pane fade in  " id="tab<?php echo $row_doc->subj_id;?>">  <!-- show subj 1 -->
-							<div class="panel panel-success">
-								<div class="panel-heading">รายการ</div>
-								<div class="panel-body">
-									<?php
-									echo $row_doc->subj_name."<br/>";
-									echo $row_doc->file_docDetail."<hr/>";
-									?>
-								</div>  <!-- end panal body -->
-							</div>  <!-- panel panel-success -->
-						</div>  <!-- end show subj 1 -->
-
+						<b><?php echo $row_doc->subj_name;?></b> 
+						<div class="pull-right">
+							---><?php echo anchor('Welcome/download/'.$row_doc->file_docId,'Download');?><br/>
+							---><?php echo anchor(base_url().'files_upload/file_document/'.$row_doc->file_docPath, 'ReadFile','target="_blank"');?>
+						</div>
+						<br/>
+						<?php  echo substr($row_doc->file_docDetail,0,100);?>
+						<hr/>
 					<?php endforeach ?>
 				</div>
 			</div>

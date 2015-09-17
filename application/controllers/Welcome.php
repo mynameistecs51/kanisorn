@@ -125,8 +125,9 @@ class Welcome extends CI_Controller {
 	}
 
 	public function  document($value=''){  //show document
+		echo $value;
 		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
-		if($value=""){
+		if($value == ""){
 
 			$data =array(
 				'active' => "document",
@@ -135,17 +136,17 @@ class Welcome extends CI_Controller {
 				'show_subj' => $this->db->query('SELECT  * FROM subjects')->result(),
 
 				);
+			echo '1';
 		}else{
 			$data =array(
-				'value<----' => $value,
+				'value' => $value,
 				'active' => "document",
 				//'show_doc' => $this->Model_main->get_doc(),
 				'fb_data' => $fb_data,
 				'show_subj' => $this->db->query('SELECT  * FROM subjects')->result(),
-				'show_doc' =>$this->db->query('SELECT * FROM file_document INNER JOIN subjects ON file_document.subj_id=subjects.subj_id WHERE file_document.subj_id ="'.$value.'" ')->result(),
+				'show_doc' =>$this->db->query('SELECT * FROM file_document INNER JOIN subjects ON file_document.subj_id=subjects.subj_id WHERE file_document.subj_id ='.$value)->result(),
 				);
 
-			print_r($data);
 		}
 		$this->load->view('document',$data);
 	}
