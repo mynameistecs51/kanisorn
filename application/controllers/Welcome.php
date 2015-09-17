@@ -124,14 +124,29 @@ class Welcome extends CI_Controller {
 		}
 	}
 
-	public function  document(){  //show document
+	public function  document($value=''){  //show document
 		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
-		$data =array(
-			'active' => "document",
-			'show_doc' => $this->Model_main->get_doc(),
-			'fb_data' => $fb_data,
-			'show_subj' => $this->db->get('subjects')->result(),
-			);
+		if($value=""){
+
+			$data =array(
+				'active' => "document",
+				'show_doc' => $this->Model_main->get_doc(),
+				'fb_data' => $fb_data,
+				'show_subj' => $this->db->query('SELECT  * FROM subjects')->result(),
+
+				);
+		}else{
+			$data =array(
+				'value<----' => $value,
+				'active' => "document",
+				//'show_doc' => $this->Model_main->get_doc(),
+				'fb_data' => $fb_data,
+				'show_subj' => $this->db->query('SELECT  * FROM subjects')->result(),
+				'show_doc' =>$this->db->query('SELECT * FROM file_document INNER JOIN subjects ON file_document.subj_id=subjects.subj_id WHERE file_document.subj_id ="'.$value.'" ')->result(),
+				);
+
+			print_r($data);
+		}
 		$this->load->view('document',$data);
 	}
 
