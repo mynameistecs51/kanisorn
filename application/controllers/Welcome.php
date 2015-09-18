@@ -125,18 +125,16 @@ class Welcome extends CI_Controller {
 	}
 
 	public function  document($value=''){  //show document
-		echo $value;
 		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
 		if($value == ""){
 
 			$data =array(
 				'active' => "document",
-				'show_doc' => $this->Model_main->get_doc(),
+				'show_doc' => $this->db->query('SELECT * FROM file_document INNER JOIN subjects ON file_document.subj_id=subjects.subj_id ')->result(),
 				'fb_data' => $fb_data,
 				'show_subj' => $this->db->query('SELECT  * FROM subjects')->result(),
 
 				);
-			echo '1';
 		}else{
 			$data =array(
 				'value' => $value,
@@ -422,7 +420,8 @@ class Welcome extends CI_Controller {
 		$this->load->helper('file');
 		// $data = file_get_contents(base_url().'files_upload/file_document/'.$file_name);
 		$name = $file_name;
-		echo $string = fopen(base_url().'files_upload/file_document/'.$name,'r');
+		echo  $string = fopen(base_url().'files_upload/file_document/'.$file_name,'r');
+		// redirect(base_url().'files_upload/file_document/'.$file_name,'refresh');
 	}
 
 	public function logout()

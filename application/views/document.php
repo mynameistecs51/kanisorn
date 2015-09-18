@@ -28,9 +28,9 @@
 			<div class="panel-body">
 				<div class="tab-content">
 					<?php foreach ($show_doc as $row_doc): ?>
-						<b><?php echo $row_doc->subj_name;?></b> 
+						<b><?php echo $row_doc->subj_name;?></b>
 						<div class="pull-right">
-							---><?php echo anchor('Welcome/download/'.$row_doc->file_docId,'Download');?><br/>
+							---><?php echo anchor('Welcome/download/'.$row_doc->file_docPath,'Download');?><br/>
 							---><?php echo anchor(base_url().'files_upload/file_document/'.$row_doc->file_docPath, 'ReadFile','target="_blank"');?>
 						</div>
 						<br/>
