@@ -34,7 +34,7 @@
 							---><?php echo anchor(base_url().'files_upload/file_document/'.$row_doc->file_docPath, 'ReadFile','target="_blank"');?>
 						</div>
 						<br/>
-						<?php  echo substr($row_doc->file_docDetail,0,100);?>
+						<?php  echo substr($row_doc->file_docDetail,0,500);?>
 						<hr/>
 					<?php endforeach ?>
 				</div>

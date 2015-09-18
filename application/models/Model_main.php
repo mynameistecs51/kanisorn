@@ -62,11 +62,12 @@ class Model_main extends CI_model{
 		$config['file_name'] = $file_name.'.'.substr($_FILES['file_doc']['name'],-4);		//file_name
 		$config['remove_spaces'] = TRUE;
 
-		$name_file = $config['file_name'] = $file_name.$_FILES['file_doc']['name'];		//file_name
+		//$name_file = $config['file_name'] = $file_name.$_FILES['file_doc']['name'];		//file_name
 
 		$this->load->library("upload",$config);		//library upload
 		$this->upload->initialize($config);
 		if($this->upload->do_upload('file_doc')){	//ถ้า upload ไม่มีปัญหา
+			$name_file = $this->upload->data('file_name');
 
 			$this->Model_main->insert_doc($name_file);
 			return TRUE;
