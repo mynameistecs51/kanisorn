@@ -578,5 +578,10 @@ class Welcome extends CI_Controller {
 			$this->Model_main->update_subj();
 			redirect('Welcome/mngsubjects','refresh');
 		}
+
+		public function get_ip()
+		{
+			echo $this->input->ip_address();
+		}
 	}
 	?>
