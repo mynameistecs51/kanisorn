@@ -65,7 +65,7 @@ class Login extends CI_model{
 
 */
    public function checkID_first($fb_data){
-       $query_faceboo_id = $this->db->query("SELECT * FROM username WHERE user_fb =".$fb_data['me']['id'])->num_rows();
+       $query_faceboo_id = $this->db->query("SELECT * FROM username WHERE user_fb =".$fb_data['me']['uid'])->num_rows();
 
        return $query_faceboo_id;
    }

@@ -48,7 +48,7 @@
 					<span class="icon-bar"></span>
 				</button>
 				<!-- <a class="navbar-brand inline" href="index" id="name_head">ดร.คณิศร จี้กระโทก</a> -->
-				<?php echo anchor('Welcome/','ดร.คณิศร จี้กระโทก','class="navbar-brand inline" id="name_head" ');?>
+				<?php echo anchor('/','ดร.คณิศร จี้กระโทก','class="navbar-brand inline" id="name_head" ');?>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">

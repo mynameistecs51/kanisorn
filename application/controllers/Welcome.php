@@ -13,6 +13,7 @@ class Welcome extends CI_Controller {
 
 	public function index(){
 		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
+		print_r($fb_data);
 		foreach ($this->db->where('user_fb',$fb_data['uid'])->get('username')->result() as  $value) {
 			$status = $value->user_status;
 		}
@@ -26,7 +27,7 @@ class Welcome extends CI_Controller {
 		{
 			$this->load->view('index',$data);
 
-		}elseif ($this->Login->checkID_first($fb_data) <= 0) {
+		}elseif ($this->Login->checkID_first($fb_data) <=0) {
 			$data_fb = array(
 				'user_fb' => $fb_data['uid'],
 				'user_fbName' => $fb_data['me']['name'],
